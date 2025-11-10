@@ -15,7 +15,7 @@ onMounted(() => {
 definePageMeta({
   layout: 'default'
 })
-//暂时string
+//点击添加题目
 const addQues = (paletteName: labelType, quesName: number) => {
   // console.log(quesName,paletteName)
   //拿到目前要增加的题目

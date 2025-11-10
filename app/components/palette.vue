@@ -31,7 +31,18 @@
       </div>
     </div>
     <div class="main">
-      <div v-for="item ,index in paletteItemsList" class="main-item" @click="emits('addQues',paletteName,index)">{{ item }}</div>
+      <div v-if="paletteName === 'out-line'" class="if-out-line">
+        <!-- 渲染大纲 -->
+      </div>
+      <div v-else class="if-not-out-line">
+        <div
+          v-for="(item, index) in paletteItemsList"
+          class="main-item"
+          @click="emits('addQues', paletteName, index)"
+        >
+          {{ item }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -93,7 +104,9 @@ const changeQuesHandler = (e: Event) => {
     dom.classList.add('active')
   }
 }
-//渲染main中的对应item
+
+//获取store中的题目列表
+// const store = 
 </script>
 
 <style scoped lang="scss">
@@ -133,27 +146,31 @@ const changeQuesHandler = (e: Event) => {
     flex: 1;
     height: 100%;
     border-radius: $radius-lg;
-    padding: 20px;
+    padding: 15px;
     // 核心：改用Grid布局，更易控制换行后的对齐
-    display: grid;
-    // 列宽固定80px，自动填充（一行能放多少列就放多少）
-    grid-template-columns: repeat(auto-fill, 100px);
-    // 水平和垂直间距（替代flex的gap）
-    gap: 20px;
-    justify-content: center;
-    align-content: flex-start;
 
-    .main-item {
-      height: 40px;
-      background-color: #1f2937e8;
-      color: #f0f2f5;
-      font-size: 14px;
-      border-radius: $radius-lg;
-      text-align: center;
-      line-height: 40px;
-      box-sizing: border-box;
-      cursor: pointer;
-      user-select: none;
+    .if-out-line {
+    }
+    .if-not-out-line {
+      display: grid;
+      // 列宽固定80px，自动填充（一行能放多少列就放多少）
+      grid-template-columns: repeat(auto-fill, 80px);
+      // 水平和垂直间距（替代flex的gap）
+      gap: 20px;
+      justify-content: center;
+      align-content: flex-start;
+      .main-item {
+        height: 40px;
+        background-color: #1f2937e8;
+        color: #f0f2f5;
+        font-size: 14px;
+        border-radius: $radius-lg;
+        text-align: center;
+        line-height: 40px;
+        box-sizing: border-box;
+        cursor: pointer;
+        user-select: none;
+      }
     }
   }
 }

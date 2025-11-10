@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-export const surveyUseStore = defineStore('survey',()=>{
+export const useSurveyStore = defineStore('survey',()=>{
     const surveyList = [];
     
 })
