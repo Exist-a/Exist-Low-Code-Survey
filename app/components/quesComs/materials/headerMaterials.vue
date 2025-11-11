@@ -6,7 +6,7 @@
         fontWeight: titleWeight ? 'normal' : 'bold',
         fontStyle: titleItalic ? 'italic' : 'normal'
       }"
-      >{{ num }}</span
+      >{{ num +". "}}</span
     >
     <span class="title-words">{{ title }}</span>
   </h2>
@@ -14,52 +14,52 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+defineProps({
   num: {
-    type: number
+    type: Number,
     required: true
-  }
+  },
   title: {
-    type: String
-    default: ''
-  }
+    type: String,
+    default: '默认题目'
+  },
   titleSize: {
-    type: String
+    type: String,
     default: '18'
-  }
+  },
   titleWeight: {
-    type: Number
+    type: Number,
     default: 0
-  }
+  },
   titleItalic: {
-    type: Number
+    type: Number,
     default: 0
-  }
+  },
   titleColor: {
-    type: String
+    type: String,
     default: '#000'
-  }
+  },
   desc: {
-    type: String
+    type: String,
     default: '请输入题目说明（选填）'
-  }
+  },
   descSize: {
-    type: String
+    type: String,
     default: '14'
-  }
+  },
   descWeight: {
-    type: Number
+    type: Number,
     default: 0
-  }
+  },
   descItalic: {
-    type: Number
+    type: Number,
     default: 0
-  }
+  },
   descColor: {
-    type: String
+    type: String,
     default: '#666'
   }
-}>()
+})
 </script>
 
 <style scoped></style>

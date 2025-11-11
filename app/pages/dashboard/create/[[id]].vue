@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <palette @addQues="addQues"></palette>
+    <singleSelect></singleSelect>
   </div>
 </template>
 
@@ -8,7 +9,7 @@
 // import { onMounted, onUnmounted } from 'vue'
 import { paletteItemsEn } from '~/types/schame/paletteSchame'
 import type { labelType } from '~/types/schame/paletteSchame'
-
+import singleSelect from '~/components/quesComs/singleSelect.vue'
 onMounted(() => {
   console.log('create：挂载成功')
 })

@@ -41,7 +41,7 @@ const handleCheck = ()=>{
   border-radius: $radius-lg;
   background-color: $bg-color;
   width: 100%;
-  height: 13vh;
+  height: 120px;
 
   .main-info {
     display: flex;
