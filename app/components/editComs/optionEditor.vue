@@ -1,10 +1,10 @@
 <template>
-    <div style="padding:20px">
-        <NuxtPage></NuxtPage>
+    <div>
+
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 
 </script>
 
