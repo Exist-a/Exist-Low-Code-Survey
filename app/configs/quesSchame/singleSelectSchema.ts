@@ -1,34 +1,34 @@
-import singleSelect from "~/components/quesComs/singleSelect.vue";
-import titleEditor from "~/components/editComs/titleEditor.vue";
-import descEditor from "~/components/editComs/descEditor.vue";
-import optionsEditor from "~/components/editComs/optionsEditor.vue";
-import positionEditor from "~/components/editComs/positionEditor.vue";
-import sizeEditor from "~/components/editComs/sizeEditor.vue";
-import weightEditor from "~/components/editComs/weightEditor.vue";
-import italicEditor from "~/components/editComs/italicEditor.vue";
-import colorEditor from "~/components/editComs/colorEditor.vue";
-import { markRaw } from "vue";
-import { v4 as uuidv4 } from "uuid";
+import singleSelect from '~/components/quesComs/singleSelect.vue'
+import titleEditor from '~/components/editComs/titleEditor.vue'
+import descEditor from '~/components/editComs/descEditor.vue'
+import optionsEditor from '~/components/editComs/optionsEditor.vue'
+import positionEditor from '~/components/editComs/positionEditor.vue'
+import sizeEditor from '~/components/editComs/sizeEditor.vue'
+import weightEditor from '~/components/editComs/weightEditor.vue'
+import italicEditor from '~/components/editComs/italicEditor.vue'
+import colorEditor from '~/components/editComs/colorEditor.vue'
+import { markRaw } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 export default function singleSelectSchema() {
   //对应组件
   return {
-    name: "single-select",
+    name: 'single-select',
     id: uuidv4(),
     type: markRaw(singleSelect),
     state: {
       title: {
         id: uuidv4(),
-        status: "单选题默认标题",
+        status: '单选题默认标题',
         isShow: true,
-        name: "title-editor",
-        editCom: markRaw(titleEditor),
+        name: 'title-editor',
+        editCom: markRaw(titleEditor)
       },
-      desc:{
+      desc: {
         id: uuidv4(),
-        status:"单选题默认描述",
-        isShow:true,
-        name:"desc-editor",
-        editCom:markRaw(descEditor),
+        status: '单选题默认描述',
+        isShow: true,
+        name: 'desc-editor',
+        editCom: markRaw(descEditor)
       },
       options: {
         id: uuidv4(),
@@ -36,7 +36,7 @@ export default function singleSelectSchema() {
         currentStatus: 0,
         isShow: true,
         name: 'options-editor',
-        editCom: markRaw(optionsEditor),
+        editCom: markRaw(optionsEditor)
       },
       position: {
         id: uuidv4(),
@@ -44,7 +44,7 @@ export default function singleSelectSchema() {
         status: ['左对齐', '居中对齐'],
         isShow: true,
         name: 'position-editor',
-        editCom: markRaw(positionEditor),
+        editCom: markRaw(positionEditor)
       },
       titleSize: {
         id: uuidv4(),
@@ -52,7 +52,7 @@ export default function singleSelectSchema() {
         status: ['22', '20', '18'],
         isShow: true,
         name: 'size-editor',
-        editCom: markRaw(sizeEditor),
+        editCom: markRaw(sizeEditor)
       },
       descSize: {
         id: uuidv4(),
@@ -60,7 +60,7 @@ export default function singleSelectSchema() {
         status: ['16', '14', '12'],
         isShow: true,
         name: 'size-editor',
-        editCom: markRaw(sizeEditor),
+        editCom: markRaw(sizeEditor)
       },
       descWeight: {
         id: uuidv4(),
@@ -68,7 +68,7 @@ export default function singleSelectSchema() {
         status: ['加粗', '正常'],
         isShow: true,
         name: 'weight-editor',
-        editCom: markRaw(weightEditor),
+        editCom: markRaw(weightEditor)
       },
       titleItalic: {
         id: uuidv4(),
@@ -76,22 +76,22 @@ export default function singleSelectSchema() {
         status: ['斜体', '正常'],
         isShow: true,
         name: 'italic-editor',
-        editCom: markRaw(italicEditor),
+        editCom: markRaw(italicEditor)
       },
       titleColor: {
         id: uuidv4(),
         status: '#000',
         isShow: true,
         name: 'color-editor',
-        editCom: markRaw(colorEditor),
+        editCom: markRaw(colorEditor)
       },
       descColor: {
         id: uuidv4(),
         status: '#909399',
         isShow: true,
         name: 'color-editor',
-        editCom: markRaw(colorEditor),
-      },
-    },
-  };
+        editCom: markRaw(colorEditor)
+      }
+    }
+  }
 }

@@ -2,11 +2,7 @@
   <div class="_container">
     <div class="label" @click="changeQuesHandler">
       <div class="item active out-line" key="1">
-        <Icon
-          name="material-symbols-light:list-alt-outline"
-          size="24"
-          class="out-line"
-        ></Icon>
+        <Icon name="material-symbols-light:list-alt-outline" size="24" class="out-line"></Icon>
         <p class="out-line">大纲</p>
       </div>
       <div class="item select" key="2">
@@ -18,11 +14,7 @@
         <p class="text-input">文本输入</p>
       </div>
       <div class="item advanced-question" key="4">
-        <Icon
-          name="mdi:star-box-outline"
-          size="24"
-          class="advanced-question"
-        ></Icon>
+        <Icon name="mdi:star-box-outline" size="24" class="advanced-question"></Icon>
         <p class="advanced-question">高级题型</p>
       </div>
       <div class="item remark" key="5">
@@ -34,11 +26,7 @@
         <p class="contact-info">联系方式</p>
       </div>
       <div class="item personal-info" key="7">
-        <Icon
-          name="fluent-mdl2:contact-info"
-          size="24"
-          class="personal-info"
-        ></Icon>
+        <Icon name="fluent-mdl2:contact-info" size="24" class="personal-info"></Icon>
         <p class="personal-info">个人信息</p>
       </div>
     </div>
@@ -60,62 +48,62 @@
 </template>
 
 <script setup lang="ts">
-import { paletteItems } from "~/types/schame/paletteSchame";
-import type { labelType } from "~/types/schame/paletteSchame";
-const emits = defineEmits(["addQues"]);
-const paletteItemsList = ref<string[]>(["大纲"]);
-const paletteName = ref<labelType>("out-line");
+import { paletteItems } from '~/configs/paletteSchame'
+import type { labelType } from '~/configs/paletteSchame'
+const emits = defineEmits(['addQues'])
+const paletteItemsList = ref<string[]>(['大纲'])
+const paletteName = ref<labelType>('out-line')
 const changeQuesHandler = (e: Event) => {
   //获取目前active
-  const beforeActiveEl = document.querySelector(".item.active");
+  const beforeActiveEl = document.querySelector('.item.active')
   if (beforeActiveEl) {
-    beforeActiveEl.classList.remove("active");
+    beforeActiveEl.classList.remove('active')
   }
 
   //获取题型
-  const dom = e.target as HTMLElement;
-  const classList = dom.classList;
-  console.log();
-  if (classList.contains("iconify") && classList[2]) {
+  const dom = e.target as HTMLElement
+  const classList = dom.classList
+  console.log()
+  if (classList.contains('iconify') && classList[2]) {
     //点击了icon
-    const classname = classList[2] as labelType;
-    paletteItemsList.value = paletteItems[classname];
-    paletteName.value = classname;
+    const classname = classList[2] as labelType
+    paletteItemsList.value = paletteItems[classname]
+    paletteName.value = classname
     //获取父元素
-    const parentNode = dom.parentNode as HTMLElement;
-    console.log(parentNode);
+    const parentNode = dom.parentNode as HTMLElement
+    console.log(parentNode)
     if (parentNode) {
-      parentNode.classList.add("active");
+      parentNode.classList.add('active')
     }
-  } else if (dom.tagName === "P") {
+  } else if (dom.tagName === 'P') {
     //点击了p
-    const classname = classList[0] as labelType;
-    paletteItemsList.value = paletteItems[classname];
-    paletteName.value = classname;
+    const classname = classList[0] as labelType
+    paletteItemsList.value = paletteItems[classname]
+    paletteName.value = classname
     //获取父元素
-    const parentNode = dom.parentNode as HTMLElement;
-    console.log(parentNode);
+    const parentNode = dom.parentNode as HTMLElement
+    console.log(parentNode)
     if (parentNode) {
-      parentNode.classList.add("active");
+      parentNode.classList.add('active')
     }
   } else {
     //点击了外层div
-    let classname: labelType | undefined;
+    let classname: labelType | undefined
     classList.forEach((item) => {
       // 检查当前类名是否是paletteItems的有效键
       if (item in paletteItems) {
-        classname = item as labelType;
+        classname = item as labelType
       }
-    });
+    })
     // 找到有效键后获取对应数组
     if (classname) {
-      paletteItemsList.value = paletteItems[classname];
-      paletteName.value = classname;
+      paletteItemsList.value = paletteItems[classname]
+      paletteName.value = classname
     }
     //添加active
-    dom.classList.add("active");
+    dom.classList.add('active')
   }
-};
+}
 
 //获取store中的题目列表
 // const store =
