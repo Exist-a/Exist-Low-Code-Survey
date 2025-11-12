@@ -37,5 +37,5 @@ export const paletteItemsEn = {
     'industry',
     'occupation'
   ]
-};
+} as const;
 export type labelType = 'out-line'|'select'|'text-input'|'advanced-question'|'remark'|'contact-info'|'personal-info'
