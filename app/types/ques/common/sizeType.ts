@@ -1,4 +1,5 @@
 import type { DefineComponent } from 'vue'
+import type { VueComType } from '../quesSchameType'
 
 export default interface sizeType {
   id: string
@@ -6,5 +7,5 @@ export default interface sizeType {
   status: string[]
   isShow: boolean
   name: 'size-editor'
-  editCom: DefineComponent
+  editCom: VueComType
 }

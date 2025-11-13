@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid'
 export default function singleSelectSchema() {
   //对应组件
   return {
-    name: 'single-select',
+    name: 'single-select' as const,
     id: uuidv4(),
     type: markRaw(singleSelect),
     state: {
@@ -20,14 +20,14 @@ export default function singleSelectSchema() {
         id: uuidv4(),
         status: '单选题默认标题',
         isShow: true,
-        name: 'title-editor',
+        name: 'title-editor' as const,
         editCom: markRaw(titleEditor)
       },
       desc: {
         id: uuidv4(),
         status: '单选题默认描述',
         isShow: true,
-        name: 'desc-editor',
+        name: 'desc-editor' as const,
         editCom: markRaw(descEditor)
       },
       options: {
@@ -35,7 +35,7 @@ export default function singleSelectSchema() {
         status: ['默认选项1', '默认选项2'],
         currentStatus: 0,
         isShow: true,
-        name: 'options-editor',
+        name: 'options-editor' as const,
         editCom: markRaw(optionsEditor)
       },
       position: {
@@ -43,7 +43,7 @@ export default function singleSelectSchema() {
         currentStatus: 0,
         status: ['左对齐', '居中对齐'],
         isShow: true,
-        name: 'position-editor',
+        name: 'position-editor' as const,
         editCom: markRaw(positionEditor)
       },
       titleSize: {
@@ -51,7 +51,7 @@ export default function singleSelectSchema() {
         currentStatus: 0,
         status: ['22', '20', '18'],
         isShow: true,
-        name: 'size-editor',
+        name: 'size-editor' as const,
         editCom: markRaw(sizeEditor)
       },
       descSize: {
@@ -59,7 +59,7 @@ export default function singleSelectSchema() {
         currentStatus: 0,
         status: ['16', '14', '12'],
         isShow: true,
-        name: 'size-editor',
+        name: 'size-editor' as const,
         editCom: markRaw(sizeEditor)
       },
       descWeight: {
@@ -67,7 +67,7 @@ export default function singleSelectSchema() {
         currentStatus: 1,
         status: ['加粗', '正常'],
         isShow: true,
-        name: 'weight-editor',
+        name: 'weight-editor' as const,
         editCom: markRaw(weightEditor)
       },
       titleItalic: {
@@ -75,21 +75,21 @@ export default function singleSelectSchema() {
         currentStatus: 1,
         status: ['斜体', '正常'],
         isShow: true,
-        name: 'italic-editor',
+        name: 'italic-editor' as const,
         editCom: markRaw(italicEditor)
       },
       titleColor: {
         id: uuidv4(),
         status: '#000',
         isShow: true,
-        name: 'color-editor',
+        name: 'color-editor' as const,
         editCom: markRaw(colorEditor)
       },
       descColor: {
         id: uuidv4(),
         status: '#909399',
         isShow: true,
-        name: 'color-editor',
+        name: 'color-editor' as const,
         editCom: markRaw(colorEditor)
       }
     }

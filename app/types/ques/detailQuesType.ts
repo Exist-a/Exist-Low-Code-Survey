@@ -22,3 +22,6 @@ export type detailQuesType = {
     | 'industry'
     | 'occupation'
 }
+
+//所有题目类型的联合类型
+export type allQuesType = detailQuesType[keyof detailQuesType];

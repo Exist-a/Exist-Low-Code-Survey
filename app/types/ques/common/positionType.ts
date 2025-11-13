@@ -1,4 +1,5 @@
 import type { DefineComponent } from 'vue'
+import type { VueComType } from '../quesSchameType'
 
 export default interface positionType {
   id: string
@@ -6,5 +7,5 @@ export default interface positionType {
   status: string[]
   isShow: boolean
   name: 'position-editor'
-  editCom: DefineComponent
+  editCom: VueComType
 }

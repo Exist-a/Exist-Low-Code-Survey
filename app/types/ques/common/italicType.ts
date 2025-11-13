@@ -1,4 +1,5 @@
 import type { DefineComponent } from 'vue'
+import type { VueComType } from '../quesSchameType'
 
 export default interface italicType {
   id: string
@@ -6,5 +7,5 @@ export default interface italicType {
   status: string[]
   isShow: boolean
   name: 'italic-editor'
-  editCom: DefineComponent
+  editCom: VueComType
 }
