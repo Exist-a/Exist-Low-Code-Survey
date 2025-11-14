@@ -13,5 +13,8 @@ export const useSurveyStore = defineStore('survey', () => {
     // 拿到题目后，向数组中添加题目的schame
     surveyList.value.push(quesMap['single-select'])
   }
-  return { addQues }
+  const getQues = ()=>{
+    return surveyList.value
+  }
+  return { addQues, getQues }
 })

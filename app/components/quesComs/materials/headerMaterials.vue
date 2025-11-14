@@ -10,7 +10,7 @@
     >
     <span class="title-words">{{ title }}</span>
   </h2>
-  <div class="desc"></div>
+  <div class="desc" :style="{ fontSize: descSize +'px', fontWeight: descWeight ? 'normal' : 'bold', color: descColor }">{{ desc }}</div>
 </template>
 
 <script setup lang="ts">

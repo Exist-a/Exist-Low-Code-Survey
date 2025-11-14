@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="radio" v-model="state" name="option">
+        <input type="checkbox" v-model="state" id="option">
         <label for="option">单选题选项</label>
     </div>
 </template>
