@@ -20,12 +20,11 @@ import { paletteItemsEn } from "~/configs/paletteSchame";
 import type { quesType } from "~/types/ques/quesType";
 import type quesSchameType from "~/types/ques/quesSchameType";
 import type { allQuesType } from "~/types/ques/detailQuesType";
-import type { AsyncComponentLoader } from "vue";
 definePageMeta({
   layout: "default",
 });
 const surveyStore = useSurveyStore();
-
+//题目组件映射表
 const quesComMap: Record<allQuesType, any> = {
   "single-select": defineAsyncComponent(
     () => import("~/components/quesComs/singleSelect.vue")
@@ -94,24 +93,13 @@ const survey = ref<HTMLElement | null>(null);
 const addQues = (paletteName: quesType, quesName: number) => {
   //拿到目前要增加的题目
   if (!paletteItemsEn[paletteName][quesName]) return;
-
+  console.log(paletteName, quesName);
   //向store中添加题目
   surveyStore.addQues(paletteName, paletteItemsEn[paletteName][quesName]);
-  console.log("surveyStore.getQues()", surveyStore.getQues());
 };
-//将store的题目列表渲染到页面上
 const getCom = (ques: quesSchameType) => {
   return quesComMap[ques.name];
 };
-// watch(
-//   quesList,
-//   (newVal) => {
-//     if (newVal) { // 确保数据存在
-//       renderQues()
-//     }
-//   },
-//   { immediate: true } // immediate: true 表示初始化时立即执行一次（替代 onMounted 中的调用）
-// )
 </script>
 
 <style scoped lang="scss">
