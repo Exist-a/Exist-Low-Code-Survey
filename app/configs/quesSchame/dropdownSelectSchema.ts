@@ -1,4 +1,3 @@
-import singleSelect from "~/components/quesComs/select/singleSelect.vue";
 import titleEditor from "~/components/editComs/titleEditor.vue";
 import descEditor from "~/components/editComs/descEditor.vue";
 import optionsEditor from "~/components/editComs/optionsEditor.vue";
@@ -9,23 +8,24 @@ import italicEditor from "~/components/editComs/italicEditor.vue";
 import colorEditor from "~/components/editComs/colorEditor.vue";
 import { markRaw } from "vue";
 import { v4 as uuidv4 } from "uuid";
-export default function singleSelectSchema() {
+import DropdownSelect from "~/components/quesComs/select/dropdownSelect.vue";
+export default function imgSingleSelectSchema() {
   //对应组件
   return {
-    name: "single-select" as const,
+    name: "dropdown-select" as const,
     id: uuidv4(),
-    type: markRaw(singleSelect),
+    type: markRaw(DropdownSelect),
     state: {
       title: {
         id: uuidv4(),
-        status: "单选题默认标题",
+        status: "下拉选择默认标题",
         isShow: true,
         name: "title-editor" as const,
         editCom: markRaw(titleEditor),
       },
       desc: {
         id: uuidv4(),
-        status: "单选题默认描述",
+        status: "下拉选择默认描述",
         isShow: true,
         name: "desc-editor" as const,
         editCom: markRaw(descEditor),
@@ -33,6 +33,7 @@ export default function singleSelectSchema() {
       options: {
         id: uuidv4(),
         status: ["默认选项1", "默认选项2"],
+
         currentStatus: 0,
         isShow: true,
         name: "options-editor" as const,

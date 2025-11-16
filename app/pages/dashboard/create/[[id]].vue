@@ -7,6 +7,7 @@
         v-for="(ques, index) in quesList"
         :key="index"
         :is="getCom(ques)"
+        :num = "quesNumList[index]"
       />
     </div>
 
@@ -27,16 +28,16 @@ const surveyStore = useSurveyStore();
 //题目组件映射表
 const quesComMap: Record<allQuesType, any> = {
   "single-select": defineAsyncComponent(
-    () => import("~/components/quesComs/singleSelect.vue")
+    () => import("~/components/quesComs/select/singleSelect.vue")
   ),
   "mult-select": defineAsyncComponent(
-    () => import("~/components/quesComs/multSelect.vue")
+    () => import("~/components/quesComs/select/multSelect.vue")
   ),
   "text-input": defineAsyncComponent(
     () => import("~/components/quesComs/textInput.vue")
   ),
   "dropdown-select": defineAsyncComponent(
-    () => import("~/components/quesComs/dropdownSelect.vue")
+    () => import("~/components/quesComs/select/dropdownSelect.vue")
   ),
   "date-time": defineAsyncComponent(
     () => import("~/components/quesComs/dateTime.vue")
@@ -77,16 +78,17 @@ const quesComMap: Record<allQuesType, any> = {
     () => import("~/components/quesComs/occupation.vue")
   ),
   "img-single-select": defineAsyncComponent(
-    () => import("~/components/quesComs/imgSingleSelect.vue")
+    () => import("~/components/quesComs/select/imgSingleSelect.vue")
   ),
   "img-mult-select": defineAsyncComponent(
-    () => import("~/components/quesComs/imgMultSelect.vue")
+    () => import("~/components/quesComs/select/imgMultSelect.vue")
   ),
   wechat: defineAsyncComponent(
     () => import("~/components/quesComs/wechat.vue")
   ),
 };
 const quesList = computed<quesSchameType[]>(() => surveyStore.getQues());
+const quesNumList = surveyStore.getQuesNum(s)
 const survey = ref<HTMLElement | null>(null);
 
 //点击添加题目

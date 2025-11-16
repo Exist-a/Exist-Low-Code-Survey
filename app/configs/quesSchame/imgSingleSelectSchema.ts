@@ -6,33 +6,41 @@ import sizeEditor from '~/components/editComs/sizeEditor.vue'
 import weightEditor from '~/components/editComs/weightEditor.vue'
 import italicEditor from '~/components/editComs/italicEditor.vue'
 import colorEditor from '~/components/editComs/colorEditor.vue'
-import multSelect from '~/components/quesComs/multSelect.vue'
 import { markRaw } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
-export default function multPicSelectSchema() {
+export default function imgSingleSelectSchema() {
   //对应组件
   return {
-    name: 'mult-select' as const,
+    name: 'img-single-select' as const,
     id: uuidv4(),
-    type: markRaw(multSelect),
+    type: markRaw(imgSingleSelectSchema),
     state: {
       title: {
         id: uuidv4(),
-        status: '多选题默认标题',
+        status: '图片单选默认标题',
         isShow: true,
         name: 'title-editor' as const,
         editCom: markRaw(titleEditor)
       },
       desc: {
         id: uuidv4(),
-        status: '多选题默认描述',
+        status: '图片单选默认描述',
         isShow: true,
         name: 'desc-editor' as const,
         editCom: markRaw(descEditor)
       },
       options: {
         id: uuidv4(),
-        status: ['默认选项1', '默认选项2'],
+        // status: ['默认选项1', '默认选项2'],
+        status:[{
+          value:'默认图片选项1',
+          imgPath:'',
+          imgDesc:'默认图片描述'
+        },{
+          value:'默认图片选项2',
+          imgPath:'',
+          imgDesc:'默认图片描述'
+        }],
         currentStatus: 0,
         isShow: true,
         name: 'options-editor' as const,
