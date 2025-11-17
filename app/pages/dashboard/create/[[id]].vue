@@ -1,13 +1,14 @@
 <template>
   <div class="container">
     <palette @addQues="addQues"></palette>
-    <div class="survey" ref="survey">
+    <div class="survey">
       <!-- <singleSelect></singleSelect> -->
       <component
         v-for="(ques, index) in quesList"
         :key="index"
         :is="getCom(ques)"
-        :num = "quesNumList[index]"
+        :num="quesNumList[index]"
+        :quesSchame="ques"
       />
     </div>
 
@@ -34,48 +35,54 @@ const quesComMap: Record<allQuesType, any> = {
     () => import("~/components/quesComs/select/multSelect.vue")
   ),
   "text-input": defineAsyncComponent(
-    () => import("~/components/quesComs/textInput.vue")
+    () => import("~/components/quesComs/textInput/textInput.vue")
   ),
   "dropdown-select": defineAsyncComponent(
     () => import("~/components/quesComs/select/dropdownSelect.vue")
   ),
   "date-time": defineAsyncComponent(
-    () => import("~/components/quesComs/dateTime.vue")
+    () => import("~/components/quesComs/advancedQuestion/dateTime.vue")
   ),
   "date-of-birth": defineAsyncComponent(
-    () => import("~/components/quesComs/dateOfBirth.vue")
+    () => import("~/components/quesComs/personalInfo/dateOfBirth.vue")
   ),
-  scale: defineAsyncComponent(() => import("~/components/quesComs/scale.vue")),
+  scale: defineAsyncComponent(
+    () => import("~/components/quesComs/advancedQuestion/scale.vue")
+  ),
   satisfaction: defineAsyncComponent(
-    () => import("~/components/quesComs/satisfaction.vue")
+    () => import("~/components/quesComs/advancedQuestion/satisfaction.vue")
   ),
-  sort: defineAsyncComponent(() => import("~/components/quesComs/sort.vue")),
+  sort: defineAsyncComponent(
+    () => import("~/components/quesComs/advancedQuestion/sort.vue")
+  ),
   remark: defineAsyncComponent(
-    () => import("~/components/quesComs/remark.vue")
+    () => import("~/components/quesComs/remark/remark.vue")
   ),
-  phone: defineAsyncComponent(() => import("~/components/quesComs/phone.vue")),
-  qq: defineAsyncComponent(() => import("~/components/quesComs/qq.vue")),
-  email: defineAsyncComponent(() => import("~/components/quesComs/email.vue")),
-  name: defineAsyncComponent(() => import("~/components/quesComs/name.vue")),
+  phone: defineAsyncComponent(
+    () => import("~/components/quesComs/contactInfo/phone.vue"
+  )),
+  qq: defineAsyncComponent(() => import("~/components/quesComs/contactInfo/qq.vue")),
+  email: defineAsyncComponent(() => import("~/components/quesComs/contactInfo/email.vue")),
+  name: defineAsyncComponent(() => import("~/components/quesComs/personalInfo/name.vue")),
   "id-card": defineAsyncComponent(
-    () => import("~/components/quesComs/idCard.vue")
+    () => import("~/components/quesComs/personalInfo/idCard.vue")
   ),
   gender: defineAsyncComponent(
-    () => import("~/components/quesComs/gender.vue")
+    () => import("~/components/quesComs/personalInfo/gender.vue")
   ),
-  age: defineAsyncComponent(() => import("~/components/quesComs/age.vue")),
+  age: defineAsyncComponent(() => import("~/components/quesComs/personalInfo/age.vue")),
   education: defineAsyncComponent(
-    () => import("~/components/quesComs/education.vue")
+    () => import("~/components/quesComs/personalInfo/education.vue")
   ),
   university: defineAsyncComponent(
-    () => import("~/components/quesComs/university.vue")
+    () => import("~/components/quesComs/personalInfo/university.vue")
   ),
-  major: defineAsyncComponent(() => import("~/components/quesComs/major.vue")),
+  major: defineAsyncComponent(() => import("~/components/quesComs/personalInfo/major.vue")),
   industry: defineAsyncComponent(
-    () => import("~/components/quesComs/industry.vue")
+    () => import("~/components/quesComs/personalInfo/industry.vue")
   ),
   occupation: defineAsyncComponent(
-    () => import("~/components/quesComs/occupation.vue")
+    () => import("~/components/quesComs/personalInfo/occupation.vue")
   ),
   "img-single-select": defineAsyncComponent(
     () => import("~/components/quesComs/select/imgSingleSelect.vue")
@@ -84,12 +91,12 @@ const quesComMap: Record<allQuesType, any> = {
     () => import("~/components/quesComs/select/imgMultSelect.vue")
   ),
   wechat: defineAsyncComponent(
-    () => import("~/components/quesComs/wechat.vue")
+    () => import("~/components/quesComs/contactInfo/wechat.vue")
   ),
 };
 const quesList = computed<quesSchameType[]>(() => surveyStore.getQues());
-const quesNumList = surveyStore.getQuesNum(s)
-const survey = ref<HTMLElement | null>(null);
+const quesNumList = surveyStore.getQuesNum();
+// const survey = ref<HTMLElement | null>(null);
 
 //点击添加题目
 const addQues = (paletteName: quesType, quesName: number) => {
@@ -109,6 +116,7 @@ const getCom = (ques: quesSchameType) => {
   display: flex;
   height: 100%;
   .survey {
+    padding: 10px;
     flex: 1;
     // background-color: #073738;
   }
