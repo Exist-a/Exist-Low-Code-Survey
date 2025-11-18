@@ -26,7 +26,6 @@
 import type quesSchameType from "~/types/ques/quesSchameType";
 import headerMaterials from "../materials/headerMaterials.vue";
 import optionMaterials from "../materials/optionMaterials.vue";
-import { stat } from "fs";
 //通过props传递配置
 
 const props = defineProps<{
@@ -37,13 +36,13 @@ const state = props.quesSchame.state;
 </script>
 
 <style scoped lang="scss">
-._container {
-  padding: 20px 10px 10px 10px;
-  transition: all 0.5s ease;
-}
-._container:hover{
-  transform: translateY(-5px);
-  box-shadow: $shadow-lg;
+// ._container {
+//   padding: 20px 10px 10px 10px;
+//   transition: all 0.5s ease;
+// }
+// ._container:hover{
+//   transform: translateY(-5px);
+//   box-shadow: $shadow-lg;
 
-}
+// }
 </style>

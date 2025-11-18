@@ -1,18 +1,19 @@
 <template>
   <div class="container">
     <palette @addQues="addQues"></palette>
-    <div class="survey">
-      <!-- <singleSelect></singleSelect> -->
+    <div class="survey" ref="survey">
       <component
         v-for="(ques, index) in quesList"
         :key="index"
         :is="getCom(ques)"
         :num="quesNumList[index]"
         :quesSchame="ques"
+        @click.native="selectQues($event, ques)"
+        class="quesCom"
       />
     </div>
 
-    <editor class="editor"></editor>
+    <editor class="editor" :isStringOptions :quesSchame="activeQues"/>
   </div>
 </template>
 
@@ -59,25 +60,35 @@ const quesComMap: Record<allQuesType, any> = {
     () => import("~/components/quesComs/remark/remark.vue")
   ),
   phone: defineAsyncComponent(
-    () => import("~/components/quesComs/contactInfo/phone.vue"
-  )),
-  qq: defineAsyncComponent(() => import("~/components/quesComs/contactInfo/qq.vue")),
-  email: defineAsyncComponent(() => import("~/components/quesComs/contactInfo/email.vue")),
-  name: defineAsyncComponent(() => import("~/components/quesComs/personalInfo/name.vue")),
+    () => import("~/components/quesComs/contactInfo/phone.vue")
+  ),
+  qq: defineAsyncComponent(
+    () => import("~/components/quesComs/contactInfo/qq.vue")
+  ),
+  email: defineAsyncComponent(
+    () => import("~/components/quesComs/contactInfo/email.vue")
+  ),
+  name: defineAsyncComponent(
+    () => import("~/components/quesComs/personalInfo/name.vue")
+  ),
   "id-card": defineAsyncComponent(
     () => import("~/components/quesComs/personalInfo/idCard.vue")
   ),
   gender: defineAsyncComponent(
     () => import("~/components/quesComs/personalInfo/gender.vue")
   ),
-  age: defineAsyncComponent(() => import("~/components/quesComs/personalInfo/age.vue")),
+  age: defineAsyncComponent(
+    () => import("~/components/quesComs/personalInfo/age.vue")
+  ),
   education: defineAsyncComponent(
     () => import("~/components/quesComs/personalInfo/education.vue")
   ),
   university: defineAsyncComponent(
     () => import("~/components/quesComs/personalInfo/university.vue")
   ),
-  major: defineAsyncComponent(() => import("~/components/quesComs/personalInfo/major.vue")),
+  major: defineAsyncComponent(
+    () => import("~/components/quesComs/personalInfo/major.vue")
+  ),
   industry: defineAsyncComponent(
     () => import("~/components/quesComs/personalInfo/industry.vue")
   ),
@@ -96,7 +107,6 @@ const quesComMap: Record<allQuesType, any> = {
 };
 const quesList = computed<quesSchameType[]>(() => surveyStore.getQues());
 const quesNumList = surveyStore.getQuesNum();
-// const survey = ref<HTMLElement | null>(null);
 
 //点击添加题目
 const addQues = (paletteName: quesType, quesName: number) => {
@@ -109,6 +119,35 @@ const addQues = (paletteName: quesType, quesName: number) => {
 const getCom = (ques: quesSchameType) => {
   return quesComMap[ques.name];
 };
+//点击选择题目
+const survey = ref<HTMLElement | null>(null);
+const activeQues = ref<quesSchameType | null>(null);
+const isStringOptions = ref<boolean>(false);
+const selectQues = (e: MouseEvent, quesSchame: quesSchameType) => {
+  //清除上一个active
+  if (survey.value) {
+    console.log(survey.value.children);
+    const children = survey.value.children;
+    for (let i = 0; i < children.length; i++) {
+      if (children[i]?.classList.contains("active")) {
+        children[i]?.classList.remove("active");
+      }
+    }
+  }
+  if (e.currentTarget && e.currentTarget instanceof HTMLElement) {
+    if (e.currentTarget.classList.contains("active")) {
+      e.currentTarget.classList.remove("active");
+    } else {
+      e.currentTarget.classList.add("active");
+    }
+    activeQues.value = quesSchame;
+    if (typeof activeQues.value.state.options.status[0] === "string") {
+      isStringOptions.value = true;
+    } else {
+      isStringOptions.value = false;
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -118,7 +157,18 @@ const getCom = (ques: quesSchameType) => {
   .survey {
     padding: 10px;
     flex: 1;
-    // background-color: #073738;
+  }
+  .quesCom:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-lg;
+  }
+  .quesCom {
+    padding: 20px 10px 10px 10px;
+    transition: all 0.5s ease;
+  }
+  .active {
+    transform: translateY(-5px);
+    box-shadow: $shadow-lg;
   }
 }
 </style>

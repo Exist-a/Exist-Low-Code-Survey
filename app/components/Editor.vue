@@ -1,21 +1,33 @@
 <template>
   <div class="editor-container">
-    <titleEditor></titleEditor>
-    <descEditor></descEditor>
-    <optionsEditor></optionsEditor>
-    <positionEditor></positionEditor>
-    <sizeEditor></sizeEditor>
-    <sizeEditor></sizeEditor>
-    <italicEditor></italicEditor>
-    <italicEditor></italicEditor>
-    <weightEditor></weightEditor>
-    <weightEditor></weightEditor>
-    <colorEditor></colorEditor>
-    <colorEditor></colorEditor>
+    <div v-if="props.quesSchame !== null">
+      <titleEditor :titleSchame="props.quesSchame.state.title"  />
+      <descEditor />
+      <optionsEditor
+        :optionsSchame="props.quesSchame.state.options"
+        :isStringOption="props.isStringOptions"
+      />
+      <positionEditor />
+      <sizeEditor />
+      <sizeEditor />
+      <italicEditor />
+      <italicEditor />
+      <weightEditor />
+      <weightEditor />
+      <colorEditor />
+      <colorEditor />
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type quesSchameType from "~/types/ques/quesSchameType";
+
+const props = defineProps<{
+  quesSchame: quesSchameType | null;
+  isStringOptions: boolean;
+}>();
+</script>
 
 <style scoped lang="scss">
 .editor-container {
