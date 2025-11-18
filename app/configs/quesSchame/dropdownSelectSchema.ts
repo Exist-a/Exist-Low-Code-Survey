@@ -71,6 +71,22 @@ export default function imgSingleSelectSchema() {
         name: "weight-editor" as const,
         editCom: markRaw(weightEditor),
       },
+      titleWeight: {
+        id: uuidv4(),
+        currentStatus: 1,
+        status: ["加粗", "正常"],
+        isShow: true,
+        name: "weight-editor" as const,
+        editCom: markRaw(weightEditor),
+      },
+      descItalic: {
+        id: uuidv4(),
+        currentStatus: 1,
+        status: ["斜体", "正常"],
+        isShow: true,
+        name: "italic-editor" as const,
+        editCom: markRaw(italicEditor),
+      },
       titleItalic: {
         id: uuidv4(),
         currentStatus: 1,

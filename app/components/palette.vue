@@ -134,7 +134,8 @@ const quesNum = ref<number[]>(surveyStore.getQuesNum());
 <style scoped lang="scss">
 ._container {
   width: 25%;
-  height: 100%;
+  // height: 100%;
+  margin: 20px 0;
   display: flex;
   align-items: stretch;
   .label {

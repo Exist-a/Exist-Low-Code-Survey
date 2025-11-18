@@ -62,6 +62,14 @@ export default function singleSelectSchema() {
         name: "size-editor" as const,
         editCom: markRaw(sizeEditor),
       },
+      titleWeight: {
+        id: uuidv4(),
+        currentStatus: 1,
+        status: ["加粗", "正常"],
+        isShow: true,
+        name: "weight-editor" as const,
+        editCom: markRaw(weightEditor),
+      },
       descWeight: {
         id: uuidv4(),
         currentStatus: 1,
@@ -71,6 +79,14 @@ export default function singleSelectSchema() {
         editCom: markRaw(weightEditor),
       },
       titleItalic: {
+        id: uuidv4(),
+        currentStatus: 1,
+        status: ["斜体", "正常"],
+        isShow: true,
+        name: "italic-editor" as const,
+        editCom: markRaw(italicEditor),
+      },
+      descItalic: {
         id: uuidv4(),
         currentStatus: 1,
         status: ["斜体", "正常"],

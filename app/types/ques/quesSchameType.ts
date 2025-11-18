@@ -21,6 +21,8 @@ export default interface quesSchameType {
     titleSize: sizeType;
     descSize: sizeType;
     descWeight: weightType;
+    titleWeight: weightType;
+    descItalic: italicType;
     titleItalic: italicType;
     titleColor: colorType;
     descColor: colorType;
@@ -34,7 +36,9 @@ export interface quesStateType {
   position: positionType;
   titleSize: sizeType;
   descSize: sizeType;
+  titleWeight: weightType;
   descWeight: weightType;
+  descItalic: italicType;
   titleItalic: italicType;
   titleColor: colorType;
   descColor: colorType;

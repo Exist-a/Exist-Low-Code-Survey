@@ -1,13 +1,21 @@
 <template>
-  <div v-for="(item, index) in props.optionsStatus.status">
-    <input
-      :type="props.isSingleSelect ? 'radio' : 'checkbox'"
-      :name="'selectOption' + props.quesNum"
-      v-model="selectedValue"
-      :id="'option' + props.quesNum + index"
-      :value="index"
-    />
-    <label :for="'option' + props.quesNum + index">{{ item }}</label>
+  <div
+    :style="{
+      textAlign: position ? 'center' : 'left',
+    }"
+    class="options-container"
+  >
+    <div v-for="(item, index) in props.optionsStatus.status" class="option-item">
+      <input
+        :type="props.isSingleSelect ? 'radio' : 'checkbox'"
+        :name="'selectOption' + props.quesNum"
+        v-model="selectedValue"
+        :id="'option' + props.quesNum + index"
+        :value="index"
+        class="select-btn"
+      />
+      <label :for="'option' + props.quesNum + index">{{ item }}</label>
+    </div>
   </div>
 </template>
 
@@ -17,6 +25,7 @@ const props = defineProps<{
   optionsStatus: optionsType;
   isSingleSelect: boolean;
   quesNum: number;
+  position: number;
 }>();
 
 // 单选：存储选中的索引（-1 表示未选中）
@@ -33,7 +42,7 @@ const selectedValue = computed({
     if (props.isSingleSelect) {
       singleState.value = val as number;
     } else {
-      multiState.value = val as number[]; 
+      multiState.value = val as number[];
     }
   },
 });
@@ -50,4 +59,17 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.options-container{
+  width: 100%;
+  // display: flex;
+  // justify-content: space-evenly;
+  .option-item{
+    display: inline-block;
+    margin: 10px;
+    .select-btn{
+      margin-right: 10px;
+    }
+  }
+}
+</style>

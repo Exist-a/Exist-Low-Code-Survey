@@ -1,11 +1,23 @@
 <template>
   <div class="_container">
     <!-- 单选题组件 -->
-    <headerMaterials :num="props.num"> </headerMaterials>
+    <headerMaterials
+      :num="props.num"
+      :title="state.title.status"
+      :titleSize="state.titleSize.status[state.titleSize.currentStatus]"
+      :titleItalic="state.titleItalic.currentStatus"
+      :titleColor="state.titleColor.status"
+      :desc="state.desc.status"
+      :descSize="state.descSize.status[state.descSize.currentStatus]"
+      :descWeight="state.descWeight.currentStatus"
+      :descItalic="state.descItalic.currentStatus"
+      :descColor="state.descColor.status"
+    />
     <optionMaterials
       :optionsStatus="props.quesSchame.state.options"
       :isSingleSelect="true"
       :quesNum="props.num"
+      :position="props.quesSchame.state.position.currentStatus"
     ></optionMaterials>
   </div>
 </template>
@@ -14,12 +26,24 @@
 import type quesSchameType from "~/types/ques/quesSchameType";
 import headerMaterials from "../materials/headerMaterials.vue";
 import optionMaterials from "../materials/optionMaterials.vue";
+import { stat } from "fs";
 //通过props传递配置
 
 const props = defineProps<{
   num: number;
   quesSchame: quesSchameType;
 }>();
+const state = props.quesSchame.state;
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+._container {
+  padding: 20px 10px 10px 10px;
+  transition: all 0.5s ease;
+}
+._container:hover{
+  transform: translateY(-5px);
+  box-shadow: $shadow-lg;
+
+}
+</style>

@@ -133,13 +133,6 @@ $item-count: 4; // 导航项数量
         width: 4.2vw;
         z-index: 1;
         left: 0.4vw;
-
-        // 为每个可能的位置定义样式
-        // @for $i from 0 through $item-count - 1 {
-        //   &.active-#{$i} {
-        //     top: $start-top + $i * $increment;
-        //   }
-        // }
       }
       .nav-link:hover .nav-icon {
         color: rgb(34, 34, 34) !important;
@@ -165,7 +158,7 @@ $item-count: 4; // 导航项数量
     }
   }
   .main {
-    padding:20px;
+    padding:0 20px ;
     flex: 1;
   }
 }

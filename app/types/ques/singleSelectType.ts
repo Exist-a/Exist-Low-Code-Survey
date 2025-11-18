@@ -19,7 +19,9 @@ export default interface singleSelectType {
     titleSize: sizeType
     descSize: sizeType
     descWeight:weightType
-    titleItalic: italicType
+    titleWeight:weightType
+    titleItalic: italicType  
+    descItalic:italicType
     titleColor: colorType
     descColor: colorType
   }

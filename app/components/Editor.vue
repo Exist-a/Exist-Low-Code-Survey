@@ -1,14 +1,29 @@
 <template>
-  <div class="container">editor</div>
+  <div class="editor-container">
+    <titleEditor></titleEditor>
+    <descEditor></descEditor>
+    <optionsEditor></optionsEditor>
+    <positionEditor></positionEditor>
+    <sizeEditor></sizeEditor>
+    <sizeEditor></sizeEditor>
+    <italicEditor></italicEditor>
+    <italicEditor></italicEditor>
+    <weightEditor></weightEditor>
+    <weightEditor></weightEditor>
+    <colorEditor></colorEditor>
+    <colorEditor></colorEditor>
+  </div>
 </template>
 
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-.container {
+.editor-container {
+  margin: 20px 0;
+  padding: 10px;
   border-radius: $radius-lg;
-  height: 100%;
+  // height: 100%;
   width: 20%;
-  background-color: #0b6d70;
+  background-color: $bg-color;
 }
 </style>

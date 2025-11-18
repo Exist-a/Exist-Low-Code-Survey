@@ -5,11 +5,16 @@ export default defineNuxtConfig({
   
   css: ['~/assets/scss/global.scss'],
   modules:['@nuxt/icon','@pinia/nuxt'],
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          // 注入变量文件，确保所有 SCSS 都能访问变量
           additionalData: `@use "~/assets/scss/variable.scss" as *;`
         }
       }

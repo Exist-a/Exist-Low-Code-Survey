@@ -1,65 +1,86 @@
 <template>
-  <h2 class="title" :style="{ fontSize: titleSize + 'px' }">
-    <span
-      class="num"
-      :style="{
-        fontWeight: titleWeight ? 'normal' : 'bold',
-        fontStyle: titleItalic ? 'italic' : 'normal'
-      }"
-      >{{ num +". "}}</span
-    >
+  <h2
+    class="title"
+    :style="{
+      fontSize: titleSize + 'px',
+      fontStyle: titleItalic ? 'normal' : 'italic',
+      textAlign: position?'center':'left',
+      color:titleColor
+    }"
+  >
+    <span class="num">{{ num + ". " }}</span>
     <span class="title-words">{{ title }}</span>
   </h2>
-  <div class="desc" :style="{ fontSize: descSize +'px', fontWeight: descWeight ? 'normal' : 'bold', color: descColor }">{{ desc }}</div>
+  <div
+    class="desc"
+    :style="{
+      fontSize: descSize + 'px',
+      fontWeight: descWeight ? 'normal' : 'bold',
+      color: descColor,
+      textAlign: position?'center':'left'
+
+    }"
+  >
+    {{ desc }}
+  </div>
 </template>
 
 <script setup lang="ts">
 defineProps({
   num: {
     type: Number,
-    required: true
+    required: true,
   },
   title: {
     type: String,
-    default: '默认题目'
+    default: "默认题目",
   },
   titleSize: {
     type: String,
-    default: '18'
-  },
-  titleWeight: {
-    type: Number,
-    default: 0
+    default: "22",
   },
   titleItalic: {
     type: Number,
-    default: 0
+    default: 1,
   },
   titleColor: {
     type: String,
-    default: '#000'
+    default: "#000",
   },
   desc: {
     type: String,
-    default: '请输入题目说明（选填）'
+    default: "请输入题目说明（选填）",
   },
   descSize: {
     type: String,
-    default: '14'
+    default: "16",
   },
   descWeight: {
     type: Number,
-    default: 0
+    default: 1,
   },
   descItalic: {
     type: Number,
-    default: 0
+    default: 0,
   },
   descColor: {
     type: String,
-    default: '#666'
+    default: "#666",
+  },
+  position:{
+    type:Number,
+    default:0
   }
-})
+});
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.title {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+.desc {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+</style>
