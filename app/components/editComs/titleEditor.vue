@@ -1,9 +1,9 @@
 <template>
   <div class="question-title-editor">
     <span class="title-label">标题:</span>
-    <editorInput 
-      :model-value="props.titleSchame.status" 
-      type="text" 
+    <editorInput
+      v-model:model-value="props.titleSchame.status"
+      type="text"
       class="title-input"
       placeholder="请输入题目标题"
     />
@@ -11,12 +11,21 @@
 </template>
 
 <script setup lang="ts">
-import type titleType from '~/types/ques/common/titleType';
-
-const titleValue = ref('');
+import type titleType from "~/types/ques/common/titleType";
+const surveyStore = useSurveyStore();
 const props = defineProps<{
-  titleSchame:titleType
-}>()
+  titleSchame: titleType;
+}>();
+const emits = defineEmits(['updateDataToStore'])
+watch(
+  () => props.titleSchame.status,
+  () => {
+    //提交数据
+    console.log("update")
+    emits('updateDataToStore',{quesStateSchame:props.titleSchame,changeType:"title"})
+  }
+);
+// const titleValue = ref('');
 </script>
 
 <style scoped lang="scss">
@@ -68,5 +77,4 @@ const props = defineProps<{
   color: #9ca3af;
   font-size: 13px;
 }
-
 </style>

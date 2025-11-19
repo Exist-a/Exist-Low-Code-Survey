@@ -43,3 +43,4 @@ export interface quesStateType {
   titleColor: colorType;
   descColor: colorType;
 }
+export type oneOfStateType = titleType|descType|optionsType|positionType|sizeType|weightType|italicType|colorType

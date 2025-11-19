@@ -1,21 +1,23 @@
 import { defineStore } from "pinia";
-import type { labelType } from "~/configs/paletteSchame";
 import type { detailQuesType } from "~/types/ques/detailQuesType";
 import singleSelectSchema from "~/configs/quesSchame/singleSelectSchema";
 import multSelectSchema from "~/configs/quesSchame/multSelectSchema";
 import type quesSchameType from "~/types/ques/quesSchameType";
 import imgMultSelectSchema from "~/configs/quesSchame/imgMultSelectSchema";
 import imgSingleSelectSchema from "~/configs/quesSchame/dropdownSelectSchema";
+import type { oneOfStateType } from "~/types/ques/quesSchameType";
+import type { titleType } from "~/types/ques/common/index";
+
 export const useSurveyStore = defineStore("survey", () => {
   const surveyList = ref<quesSchameType[]>([]);
   const surveyNum = ref<number[]>([]);
 
   //补全quesMap(待处理)
   const quesMap = {
-    "single-select": singleSelectSchema(),
-    "mult-select": multSelectSchema(),
-    "img-mult-select": imgMultSelectSchema(),
-    "img-single-select": imgSingleSelectSchema(),
+    "single-select": singleSelectSchema,
+    "mult-select": multSelectSchema,
+    "img-mult-select": imgMultSelectSchema,
+    "img-single-select": imgSingleSelectSchema,
   };
   //向问卷中添加题目，添加的是对应schame的默认内容
   const addQues = (
@@ -32,7 +34,7 @@ export const useSurveyStore = defineStore("survey", () => {
       //列表中推入新序号
       surveyNum.value.push(getNewQuesNum());
 
-      surveyList.value.push(quesMap[detailQues]);
+      surveyList.value.push(quesMap[detailQues]());
       //
     }
   };
@@ -55,5 +57,27 @@ export const useSurveyStore = defineStore("survey", () => {
     }
     return 1; // 所有项都是remark时，新题目序号为1
   };
-  return { addQues, getQues, getQuesNum };
+  const updateQues = (
+    quesNum: number,
+    quesStateSchame: oneOfStateType,
+    changeType: "title" | "desc"
+  ) => {
+    const name = quesStateSchame.name;
+    // console.log("store")
+    const stateMap = {
+      "title-editor": "title",
+      "desc-editor": "desc",
+      "options-editor": "options",
+      "position-editor": "position",
+      "size-editor": changeType === "title" ? "titleSize" : "descSize",
+      "weight-editor": changeType === "title" ? "titleWeight" : "descWeight",
+      "italic-editor": changeType === "title" ? "titleItalic" : "descItalic",
+      "color-editor": changeType === "title" ? "titleColor" : "descColor",
+    } as const;
+    if (surveyList.value[quesNum]) {
+      console.log("store",surveyList.value)
+      surveyList.value[quesNum].state[stateMap[name]] = quesStateSchame as any;
+    }
+  };
+  return { addQues, getQues, getQuesNum, updateQues };
 });

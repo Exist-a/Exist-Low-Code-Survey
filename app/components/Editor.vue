@@ -1,7 +1,10 @@
 <template>
   <div class="editor-container">
     <div v-if="props.quesSchame !== null">
-      <titleEditor :titleSchame="props.quesSchame.state.title"  />
+      <titleEditor
+        :titleSchame="props.quesSchame.state.title"
+        @updateDataToStore="updateDataToStore"
+      />
       <descEditor />
       <optionsEditor
         :optionsSchame="props.quesSchame.state.options"
@@ -21,12 +24,25 @@
 </template>
 
 <script setup lang="ts">
+import type { oneOfStateType } from "~/types/ques/quesSchameType";
 import type quesSchameType from "~/types/ques/quesSchameType";
-
+const surveyStore = useSurveyStore();
 const props = defineProps<{
   quesSchame: quesSchameType | null;
   isStringOptions: boolean;
+  activeNum: number | null;
 }>();
+const updateDataToStore = (
+  quesStateSchame: oneOfStateType,
+  changeType: "title" | "desc"
+) => {
+  const quesNum = props.activeNum;
+  if (quesNum!==null) {
+  console.log(quesNum)
+
+    surveyStore.updateQues(quesNum, quesStateSchame, changeType);
+  }
+};
 </script>
 
 <style scoped lang="scss">

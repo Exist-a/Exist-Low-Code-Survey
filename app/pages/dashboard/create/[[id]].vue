@@ -8,12 +8,12 @@
         :is="getCom(ques)"
         :num="quesNumList[index]"
         :quesSchame="ques"
-        @click.native="selectQues($event, ques)"
+        @click.native="selectQues($event, ques,index)"
         class="quesCom"
       />
     </div>
 
-    <editor class="editor" :isStringOptions :quesSchame="activeQues"/>
+    <editor class="editor" :isStringOptions :quesSchame="activeQues" :activeNum/>
   </div>
 </template>
 
@@ -123,10 +123,10 @@ const getCom = (ques: quesSchameType) => {
 const survey = ref<HTMLElement | null>(null);
 const activeQues = ref<quesSchameType | null>(null);
 const isStringOptions = ref<boolean>(false);
-const selectQues = (e: MouseEvent, quesSchame: quesSchameType) => {
+const activeNum = ref<number|null>(null)
+const selectQues = (e: MouseEvent, quesSchame: quesSchameType,activeIndex:number) => {
   //清除上一个active
   if (survey.value) {
-    console.log(survey.value.children);
     const children = survey.value.children;
     for (let i = 0; i < children.length; i++) {
       if (children[i]?.classList.contains("active")) {
@@ -141,6 +141,7 @@ const selectQues = (e: MouseEvent, quesSchame: quesSchameType) => {
       e.currentTarget.classList.add("active");
     }
     activeQues.value = quesSchame;
+    activeNum.value = activeIndex;
     if (typeof activeQues.value.state.options.status[0] === "string") {
       isStringOptions.value = true;
     } else {
