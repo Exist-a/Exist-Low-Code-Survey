@@ -5,7 +5,10 @@
         :titleSchame="props.quesSchame.state.title"
         @updateDataToStore="updateDataToStore"
       />
-      <descEditor />
+      <descEditor 
+      :descSchame="props.quesSchame.state.desc"
+      @updateDataToStore="updateDataToStore"
+      />
       <optionsEditor
         :optionsSchame="props.quesSchame.state.options"
         :isStringOption="props.isStringOptions"
@@ -34,7 +37,7 @@ const props = defineProps<{
 }>();
 const updateDataToStore = (
   quesStateSchame: oneOfStateType,
-  changeType: "title" | "desc"
+  changeType?: "title" | "desc"
 ) => {
   const quesNum = props.activeNum;
   if (quesNum!==null) {

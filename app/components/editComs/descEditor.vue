@@ -1,9 +1,9 @@
 <template>
   <div class="question-desc-editor">
     <span class="desc-label">描述:</span>
-    <editorInput 
-      :model-value="titleValue" 
-      type="text" 
+    <editorInput
+      v-model:model-value="props.descSchame.status"
+      type="text"
       class="desc-input"
       placeholder="请输入题目描述"
     />
@@ -11,7 +11,20 @@
 </template>
 
 <script setup lang="ts">
-const titleValue = ref('');
+import type { descType } from "~/types/ques/common";
+const props = defineProps<{
+  descSchame: descType;
+}>();
+const emits = defineEmits(["updateDataToStore"]);
+watch(
+  () => props.descSchame.status,
+  () => {
+    emits("updateDataToStore", {
+      quesStateSchame: props.descSchame,
+      changeType: "desc",
+    });
+  }
+);
 </script>
 
 <style scoped lang="scss">
@@ -35,7 +48,6 @@ const titleValue = ref('');
   font-size: 14px;
   color: #333;
   font-weight: 500;
-  white-space: nowrap; /* 防止标题文字换行 */
 }
 
 .desc-input {
@@ -51,17 +63,16 @@ const titleValue = ref('');
 }
 
 /* 输入框聚焦状态 */
-.desc-input:focus {
-  outline: none;
-  border-color: $font-color-normal;
-  background-color: #fff;
-  box-shadow: 0 0 0 3px rgba(35, 91, 158, 0.388);
-}
+// .desc-input:focus {
+//   outline: none;
+//   border-color: $font-color-normal;
+//   background-color: #fff;
+//   box-shadow: 0 0 0 3px rgba(35, 91, 158, 0.388);
+// }
 
 /* 输入框占位符样式 */
 .desc-input::placeholder {
   color: #9ca3af;
   font-size: 13px;
 }
-
 </style>

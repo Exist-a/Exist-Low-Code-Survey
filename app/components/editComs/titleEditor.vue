@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import type titleType from "~/types/ques/common/titleType";
-const surveyStore = useSurveyStore();
+// const surveyStore = useSurveyStore();
 const props = defineProps<{
   titleSchame: titleType;
 }>();
@@ -21,7 +21,7 @@ watch(
   () => props.titleSchame.status,
   () => {
     //提交数据
-    console.log("update")
+    
     emits('updateDataToStore',{quesStateSchame:props.titleSchame,changeType:"title"})
   }
 );

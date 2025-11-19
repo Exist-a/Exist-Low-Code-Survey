@@ -33,9 +33,7 @@ export const useSurveyStore = defineStore("survey", () => {
     ) {
       //列表中推入新序号
       surveyNum.value.push(getNewQuesNum());
-
       surveyList.value.push(quesMap[detailQues]());
-      //
     }
   };
   const getQues = () => {
@@ -60,7 +58,7 @@ export const useSurveyStore = defineStore("survey", () => {
   const updateQues = (
     quesNum: number,
     quesStateSchame: oneOfStateType,
-    changeType: "title" | "desc"
+    changeType?: "title" | "desc"
   ) => {
     const name = quesStateSchame.name;
     // console.log("store")

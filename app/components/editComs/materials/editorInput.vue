@@ -28,8 +28,16 @@ const handleInput = (e: InputEvent) => {
   //   box-shadow: 3px 3px 3px inset rgb(184, 184, 184);
   outline: 1px solid black;
   border-radius: $radius-sm;
-  border: none;
-    width: 100%;
+  border: 1px solid #e5e7eb;
+  // border: none;
+  width: 100%;
   font-size: 16px;
+  transition: all 0.2s ease;
+}
+.input:focus {
+  outline: none;
+  border-color: $font-color-normal;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(35, 90, 158, 0.246);
 }
 </style>
