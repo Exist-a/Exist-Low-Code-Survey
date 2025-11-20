@@ -6,7 +6,7 @@
         <Icon name="teenyicons:add-small-outline" size="25px"></Icon>
       </div>
     </div>
-    <div class="string-options" v-if="isStringOption">
+    <div class="string-options" v-if="isStringOption === true">
       <!-- 是字符串类型的选项 -->
       <div class="option" v-for="(item, index) in props.optionsSchame.status">
         <editorInput
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="img-options" v-else></div>
+    <div class="img-options" v-else-if="isStringOption === false"></div>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ import type optionsType from "~/types/ques/common/optionsType";
 import type {imgOptionsStatus} from "~/types/ques/common/optionsType";
 const props = defineProps<{
   optionsSchame: optionsType;
-  isStringOption: boolean;
+  isStringOption: boolean|null;
 }>();
 const emits = defineEmits(["updateDataToStore"]);
 watch(
@@ -95,7 +95,7 @@ const addOption = () => {
   border-radius: $radius-lg;
   padding: 10px;
   transition: box-shadow 0.2s ease;
-
+  margin-bottom: 10px;
   .header {
     display: flex;
     justify-content: space-between;

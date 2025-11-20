@@ -12,8 +12,12 @@
       <optionsEditor
         :optionsSchame="props.quesSchame.state.options"
         :isStringOption="props.isStringOptions"
+        @updateDataToStore="updateDataToStore"
       />
-      <positionEditor />
+      <positionEditor
+        :positionSchame="props.quesSchame.state.position"
+        @updateDataToStore="updateDataToStore"
+      />
       <sizeEditor />
       <sizeEditor />
       <italicEditor />
@@ -32,7 +36,7 @@ import type quesSchameType from "~/types/ques/quesSchameType";
 const surveyStore = useSurveyStore();
 const props = defineProps<{
   quesSchame: quesSchameType | null;
-  isStringOptions: boolean;
+  isStringOptions: boolean | null;
   activeNum: number | null;
 }>();
 const updateDataToStore = (

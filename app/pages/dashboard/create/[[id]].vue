@@ -7,11 +7,11 @@
           <Icon name="teenyicons:minus-small-outline" size="30px"></Icon>
         </div>
         <component
-          :key="index"
+          :key="ques.id"
           :is="getCom(ques)"
           :num="quesNumList[index]"
           :quesSchame="ques"
-          @click.native="selectQues($event, ques, index)"
+          @click="selectQues($event, ques, index)"
           class="quesCom"
         />
       </div>
@@ -21,7 +21,7 @@
       class="editor"
       :isStringOptions
       :quesSchame="activeQues"
-      :activeNum
+      :activeNum="activeNum"
     />
   </div>
 </template>
@@ -32,6 +32,8 @@ import { paletteItemsEn } from "~/configs/paletteSchame";
 import type { quesType } from "~/types/ques/quesType";
 import type quesSchameType from "~/types/ques/quesSchameType";
 import type { allQuesType } from "~/types/ques/detailQuesType";
+import { v4 as uuidv4 } from "uuid";
+
 definePageMeta({
   layout: "default",
 });
@@ -121,9 +123,24 @@ const quesNumList = ref(surveyStore.getQuesNum());
 const addQues = (paletteName: quesType, quesName: number) => {
   //拿到目前要增加的题目
   if (!paletteItemsEn[paletteName][quesName]) return;
-  console.log(paletteName, quesName);
   //向store中添加题目
   surveyStore.addQues(paletteName, paletteItemsEn[paletteName][quesName]);
+  //将更新active
+  if (survey.value) {
+    const childrenQues = survey.value.children;
+    for (let i = 0; i < childrenQues.length; i++) {
+      if (
+        childrenQues[i] &&
+        childrenQues[i]?.children[1]?.classList.contains("active")
+      ) {
+        childrenQues[i]?.children[1]?.classList.remove("active");
+
+        childrenQues[i]?.children[0]?.classList.remove("btn-active");
+      }
+    }
+    activeQues.value = null;
+    activeNum.value = null;
+  }
 };
 const getCom = (ques: quesSchameType) => {
   return quesComMap[ques.name];
@@ -131,7 +148,7 @@ const getCom = (ques: quesSchameType) => {
 //点击选择题目
 const survey = ref<HTMLElement | null>(null);
 const activeQues = ref<quesSchameType | null>(null);
-const isStringOptions = ref<boolean>(false);
+const isStringOptions = ref<boolean | null>(null);
 const activeNum = ref<number | null>(null);
 const selectQues = (
   e: MouseEvent,
@@ -140,19 +157,22 @@ const selectQues = (
 ) => {
   //清除上一个active
   if (
+    activeNum.value !== null &&
     e.currentTarget instanceof HTMLElement &&
     e.currentTarget &&
     !e.currentTarget.classList.contains("active") &&
     survey.value
   ) {
     const childrenQues = survey.value.children;
-    // console.log(survey.value.previousElementSibling)
     for (let i = 0; i < childrenQues.length; i++) {
       if (
         childrenQues[i] &&
         childrenQues[i]?.children[1]?.classList.contains("active")
       ) {
         childrenQues[i]?.children[1]?.classList.remove("active");
+        activeNum.value = null;
+        activeQues.value = null;
+        console.log("进入清除上一个active状态", activeNum.value);
 
         childrenQues[i]?.children[0]?.classList.remove("btn-active");
       }
@@ -164,18 +184,34 @@ const selectQues = (
       e.currentTarget.classList.contains("active") &&
       reduceBtn?.classList.contains("btn-active")
     ) {
+
       reduceBtn.classList.remove("btn-active");
       e.currentTarget.classList.remove("active");
+      activeQues.value = null;
+      activeNum.value = null;
     } else {
+
       reduceBtn?.classList.add("btn-active");
+      console.log(e.currentTarget.classList, 1);
       e.currentTarget.classList.add("active");
+      console.log(e.currentTarget.classList, 2);
+
+      activeQues.value = quesSchame;
+      activeNum.value = activeIndex;
     }
-    activeQues.value = quesSchame;
-    activeNum.value = activeIndex;
-    if (typeof activeQues.value.state.options.status[0] === "string") {
+
+    if (
+      activeQues.value &&
+      typeof activeQues.value.state.options.status[0] === "string"
+    ) {
       isStringOptions.value = true;
-    } else {
+    } else if (
+      activeQues.value &&
+      typeof activeQues.value.state.options.status[0] !== "string"
+    ) {
       isStringOptions.value = false;
+    } else {
+      isStringOptions.value = null;
     }
   }
 };
@@ -183,6 +219,21 @@ const delQues = (index: number) => {
   surveyStore.deleteQues(index);
   //editor清空
   activeQues.value = null;
+  activeNum.value = null;
+  //去除active
+  const childrenQues = survey.value?.children;
+  if (childrenQues && childrenQues[index]) {
+    for (let i = 0; i < childrenQues.length; i++) {
+      if (
+        childrenQues[i] &&
+        childrenQues[i]?.children[1]?.classList.contains("active")
+      ) {
+        childrenQues[i]?.children[1]?.classList.remove("active");
+
+        childrenQues[i]?.children[0]?.classList.remove("btn-active");
+      }
+    }
+  }
 };
 </script>
 

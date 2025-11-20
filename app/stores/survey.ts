@@ -81,7 +81,7 @@ export const useSurveyStore = defineStore("survey", () => {
     changeType?: "title" | "desc"
   ) => {
     const name = quesStateSchame.name;
-    // console.log("store")
+    console.log(quesNum)
     const stateMap = {
       "title-editor": "title",
       "desc-editor": "desc",

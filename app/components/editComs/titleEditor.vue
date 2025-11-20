@@ -49,7 +49,6 @@ watch(
   font-size: 14px;
   color: #333;
   font-weight: 500;
-  white-space: nowrap; /* 防止标题文字换行 */
 }
 
 .title-input {

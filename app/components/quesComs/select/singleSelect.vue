@@ -1,5 +1,5 @@
 <template>
-  <div class="_container">
+  <div class="_container" v-bind="$attrs">
     <!-- 单选题组件 -->
     <headerMaterials
       :num="props.num"
@@ -12,12 +12,13 @@
       :descWeight="state.descWeight.currentStatus"
       :descItalic="state.descItalic.currentStatus"
       :descColor="state.descColor.status"
+      :position="state.position.currentStatus"
     />
     <optionMaterials
       :optionsStatus="props.quesSchame.state.options"
       :isSingleSelect="true"
       :quesNum="props.num"
-      :position="props.quesSchame.state.position.currentStatus"
+      :position="state.position.currentStatus"
     ></optionMaterials>
   </div>
 </template>
