@@ -13,7 +13,6 @@ const props = defineProps<{
   title: string;
   desc?: string;
 }>();
-console.log(props.title);
 </script>
 
 <style scoped lang="scss">

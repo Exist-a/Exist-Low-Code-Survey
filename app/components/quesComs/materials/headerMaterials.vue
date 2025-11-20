@@ -4,8 +4,8 @@
     :style="{
       fontSize: titleSize + 'px',
       fontStyle: titleItalic ? 'normal' : 'italic',
-      textAlign: position?'center':'left',
-      color:titleColor
+      textAlign: position ? 'center' : 'left',
+      color: titleColor,
     }"
   >
     <span class="num">{{ num + ". " }}</span>
@@ -17,8 +17,7 @@
       fontSize: descSize + 'px',
       fontWeight: descWeight ? 'normal' : 'bold',
       color: descColor,
-      textAlign: position?'center':'left'
-
+      textAlign: position ? 'center' : 'left',
     }"
   >
     {{ desc }}
@@ -67,10 +66,10 @@ defineProps({
     type: String,
     default: "#666",
   },
-  position:{
-    type:Number,
-    default:0
-  }
+  position: {
+    type: Number,
+    default: 0,
+  },
 });
 </script>
 

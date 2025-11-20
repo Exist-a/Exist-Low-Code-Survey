@@ -5,9 +5,9 @@
         :titleSchame="props.quesSchame.state.title"
         @updateDataToStore="updateDataToStore"
       />
-      <descEditor 
-      :descSchame="props.quesSchame.state.desc"
-      @updateDataToStore="updateDataToStore"
+      <descEditor
+        :descSchame="props.quesSchame.state.desc"
+        @updateDataToStore="updateDataToStore"
       />
       <optionsEditor
         :optionsSchame="props.quesSchame.state.options"
@@ -40,9 +40,7 @@ const updateDataToStore = (
   changeType?: "title" | "desc"
 ) => {
   const quesNum = props.activeNum;
-  if (quesNum!==null) {
-  console.log(quesNum)
-
+  if (quesNum !== null) {
     surveyStore.updateQues(quesNum, quesStateSchame, changeType);
   }
 };

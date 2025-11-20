@@ -2,18 +2,27 @@
   <div class="container">
     <palette @addQues="addQues"></palette>
     <div class="survey" ref="survey">
-      <component
-        v-for="(ques, index) in quesList"
-        :key="index"
-        :is="getCom(ques)"
-        :num="quesNumList[index]"
-        :quesSchame="ques"
-        @click.native="selectQues($event, ques,index)"
-        class="quesCom"
-      />
+      <div class="ques" v-for="(ques, index) in quesList">
+        <div class="reduce-btn" @click="delQues(index)">
+          <Icon name="teenyicons:minus-small-outline" size="30px"></Icon>
+        </div>
+        <component
+          :key="index"
+          :is="getCom(ques)"
+          :num="quesNumList[index]"
+          :quesSchame="ques"
+          @click.native="selectQues($event, ques, index)"
+          class="quesCom"
+        />
+      </div>
     </div>
 
-    <editor class="editor" :isStringOptions :quesSchame="activeQues" :activeNum/>
+    <editor
+      class="editor"
+      :isStringOptions
+      :quesSchame="activeQues"
+      :activeNum
+    />
   </div>
 </template>
 
@@ -106,7 +115,7 @@ const quesComMap: Record<allQuesType, any> = {
   ),
 };
 const quesList = computed<quesSchameType[]>(() => surveyStore.getQues());
-const quesNumList = surveyStore.getQuesNum();
+const quesNumList = ref(surveyStore.getQuesNum());
 
 //点击添加题目
 const addQues = (paletteName: quesType, quesName: number) => {
@@ -123,21 +132,42 @@ const getCom = (ques: quesSchameType) => {
 const survey = ref<HTMLElement | null>(null);
 const activeQues = ref<quesSchameType | null>(null);
 const isStringOptions = ref<boolean>(false);
-const activeNum = ref<number|null>(null)
-const selectQues = (e: MouseEvent, quesSchame: quesSchameType,activeIndex:number) => {
+const activeNum = ref<number | null>(null);
+const selectQues = (
+  e: MouseEvent,
+  quesSchame: quesSchameType,
+  activeIndex: number
+) => {
   //清除上一个active
-  if (survey.value) {
-    const children = survey.value.children;
-    for (let i = 0; i < children.length; i++) {
-      if (children[i]?.classList.contains("active")) {
-        children[i]?.classList.remove("active");
+  if (
+    e.currentTarget instanceof HTMLElement &&
+    e.currentTarget &&
+    !e.currentTarget.classList.contains("active") &&
+    survey.value
+  ) {
+    const childrenQues = survey.value.children;
+    // console.log(survey.value.previousElementSibling)
+    for (let i = 0; i < childrenQues.length; i++) {
+      if (
+        childrenQues[i] &&
+        childrenQues[i]?.children[1]?.classList.contains("active")
+      ) {
+        childrenQues[i]?.children[1]?.classList.remove("active");
+
+        childrenQues[i]?.children[0]?.classList.remove("btn-active");
       }
     }
   }
   if (e.currentTarget && e.currentTarget instanceof HTMLElement) {
-    if (e.currentTarget.classList.contains("active")) {
+    const reduceBtn = e.currentTarget.previousElementSibling;
+    if (
+      e.currentTarget.classList.contains("active") &&
+      reduceBtn?.classList.contains("btn-active")
+    ) {
+      reduceBtn.classList.remove("btn-active");
       e.currentTarget.classList.remove("active");
     } else {
+      reduceBtn?.classList.add("btn-active");
       e.currentTarget.classList.add("active");
     }
     activeQues.value = quesSchame;
@@ -149,6 +179,11 @@ const selectQues = (e: MouseEvent, quesSchame: quesSchameType,activeIndex:number
     }
   }
 };
+const delQues = (index: number) => {
+  surveyStore.deleteQues(index);
+  //editor清空
+  activeQues.value = null;
+};
 </script>
 
 <style scoped lang="scss">
@@ -158,18 +193,34 @@ const selectQues = (e: MouseEvent, quesSchame: quesSchameType,activeIndex:number
   .survey {
     padding: 10px;
     flex: 1;
-  }
-  .quesCom:hover {
-    transform: translateY(-5px);
-    box-shadow: $shadow-lg;
-  }
-  .quesCom {
-    padding: 20px 10px 10px 10px;
-    transition: all 0.5s ease;
-  }
-  .active {
-    transform: translateY(-5px);
-    box-shadow: $shadow-lg;
+    .ques {
+      position: relative;
+      .reduce-btn {
+        height: 30px;
+        width: 30px;
+        background-color: $danger;
+        border-radius: $radius-base;
+        position: absolute;
+        right: 5px;
+        visibility: hidden;
+        z-index: 1;
+      }
+      .btn-active {
+        visibility: visible;
+      }
+      .quesCom:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-lg;
+      }
+      .quesCom {
+        padding: 20px 10px 10px 10px;
+        transition: all 0.5s ease;
+      }
+      .active {
+        transform: translateY(-5px);
+        box-shadow: $shadow-lg;
+      }
+    }
   }
 }
 </style>

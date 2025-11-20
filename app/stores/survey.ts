@@ -55,6 +55,26 @@ export const useSurveyStore = defineStore("survey", () => {
     }
     return 1; // 所有项都是remark时，新题目序号为1
   };
+  //更新题号
+  const updateQuesNum = (index: number) => {
+    if (surveyNum.value[index] && surveyNum.value[index] !== -1) {
+      //是有题号的题目
+      surveyNum.value.splice(index, 1);
+      for (let i = index; i < surveyNum.value.length; i++) {
+        const current = surveyNum.value[i];
+        if (current === undefined) {
+          continue;
+        }
+        if (current && current !== -1) {
+          surveyNum.value[i] = current-1;
+        } else {
+          continue;
+        }
+      }
+    } else {
+      surveyNum.value.splice(index, 1);
+    }
+  };
   const updateQues = (
     quesNum: number,
     quesStateSchame: oneOfStateType,
@@ -73,9 +93,12 @@ export const useSurveyStore = defineStore("survey", () => {
       "color-editor": changeType === "title" ? "titleColor" : "descColor",
     } as const;
     if (surveyList.value[quesNum]) {
-      console.log("store",surveyList.value)
       surveyList.value[quesNum].state[stateMap[name]] = quesStateSchame as any;
     }
   };
-  return { addQues, getQues, getQuesNum, updateQues };
+  const deleteQues = (index: number) => {
+    surveyList.value.splice(index, 1);
+    updateQuesNum(index);
+  };
+  return { addQues, getQues, getQuesNum, updateQues, deleteQues };
 });
