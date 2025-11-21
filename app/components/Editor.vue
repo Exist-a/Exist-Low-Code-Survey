@@ -18,14 +18,46 @@
         :positionSchame="props.quesSchame.state.position"
         @updateDataToStore="updateDataToStore"
       />
-      <sizeEditor />
-      <sizeEditor />
-      <italicEditor />
-      <italicEditor />
-      <weightEditor />
-      <weightEditor />
-      <colorEditor />
-      <colorEditor />
+      <sizeEditor
+        :sizeSchame="props.quesSchame.state.titleSize"
+        @updateDataToStore="updateDataToStore"
+        changeType="title"
+      />
+      <sizeEditor
+        :sizeSchame="props.quesSchame.state.descSize"
+        @updateDataToStore="updateDataToStore"
+        changeType="desc"
+      />
+      <italicEditor
+        :italicSchame="props.quesSchame.state.titleItalic"
+        @updateDataToStore="updateDataToStore"
+        changeType="title"
+      />
+      <italicEditor
+        :italicSchame="props.quesSchame.state.descItalic"
+        @updateDataToStore="updateDataToStore"
+        changeType="desc"
+      />
+      <weightEditor
+        :weightSchame="props.quesSchame.state.titleWeight"
+        @updateDataToStore="updateDataToStore"
+        changeType="title"
+      />
+      <weightEditor
+        :weightSchame="props.quesSchame.state.descWeight"
+        @updateDataToStore="updateDataToStore"
+        changeType="desc"
+      />
+      <colorEditor
+        :colorSchame="props.quesSchame.state.titleColor"
+        @updateDataToStore="updateDataToStore"
+        changeType="title"
+      />
+      <colorEditor
+        :colorSchame="props.quesSchame.state.descColor"
+        @updateDataToStore="updateDataToStore"
+        changeType="desc"
+      />
     </div>
   </div>
 </template>
@@ -52,6 +84,7 @@ const updateDataToStore = (
 
 <style scoped lang="scss">
 .editor-container {
+  overflow-y: scroll;
   margin: 20px 0;
   padding: 10px;
   border-radius: $radius-lg;

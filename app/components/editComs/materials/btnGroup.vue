@@ -4,9 +4,22 @@
       :class="{ active: props.currentStatus === index }"
       v-for="(item, index) in props.iconName"
       :key="index"
-      @click="changeStatus(index,$event)"
+      @click="changeStatus(index, $event)"
+      :style="{
+        width: props.width ? props.width : '45px',
+        height: props.height ? props.height : '45px',
+      }"
     >
-      <Icon :name="item" size="30" class="icon"></Icon>
+      <Icon
+        :name="item"
+        size="30"
+        class="icon"
+        :style="{
+          top: props.height
+            ? (parseInt(props.height.slice(0, -1)) - 30) / 2 + 'px'
+            : '7.5px',
+        }"
+      />
     </div>
   </div>
 </template>
@@ -16,13 +29,16 @@ const props = defineProps<{
   status: string[];
   iconName: string[];
   currentStatus: number;
+  width?: string;
+  height?: string;
 }>();
-const emits = defineEmits(['changeStatus'])
+const emits = defineEmits(["changeStatus"]);
+console.log(props.width);
 const btnGroup = ref<HTMLElement | null>(null);
-const changeStatus = (index:number,e: MouseEvent) => {
+const changeStatus = (index: number, e: MouseEvent) => {
   changeActive(e);
   //触发emits
-  emits('changeStatus',index)
+  emits("changeStatus", index);
 };
 const changeActive = (e: MouseEvent) => {
   if (btnGroup.value) {

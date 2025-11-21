@@ -2,6 +2,7 @@
   <h2
     class="title"
     :style="{
+      fontWeight: titleWeight ? 'normal' : 'bold',
       fontSize: titleSize + 'px',
       fontStyle: titleItalic ? 'normal' : 'italic',
       textAlign: position ? 'center' : 'left',
@@ -17,6 +18,7 @@
       fontSize: descSize + 'px',
       fontWeight: descWeight ? 'normal' : 'bold',
       color: descColor,
+      fontStyle: descItalic ? 'normal' : 'italic',
       textAlign: position ? 'center' : 'left',
     }"
   >
@@ -45,6 +47,10 @@ defineProps({
   titleColor: {
     type: String,
     default: "#000",
+  },
+  titleWeight: {
+    type: Number,
+    default: 1,
   },
   desc: {
     type: String,

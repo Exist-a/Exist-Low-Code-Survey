@@ -7,6 +7,7 @@
       :titleSize="state.titleSize.status[state.titleSize.currentStatus]"
       :titleItalic="state.titleItalic.currentStatus"
       :titleColor="state.titleColor.status"
+      :titleWeight="state.titleWeight.currentStatus"
       :desc="state.desc.status"
       :descSize="state.descSize.status[state.descSize.currentStatus]"
       :descWeight="state.descWeight.currentStatus"

@@ -6,7 +6,7 @@
       :iconName="iconName"
       :current-status="props.positionSchame.currentStatus"
       @changeStatus = "changeStatus"
-    ></btnGroup>
+    />
   </div>
 </template>
 

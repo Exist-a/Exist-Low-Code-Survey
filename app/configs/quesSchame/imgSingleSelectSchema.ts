@@ -107,7 +107,7 @@ export default function imgSingleSelectSchema() {
       },
       titleColor: {
         id: uuidv4(),
-        status: "#000",
+        status: "#000000",
         isShow: true,
         name: "color-editor" as const,
         editCom: markRaw(colorEditor),
