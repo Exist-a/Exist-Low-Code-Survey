@@ -45,7 +45,7 @@ export default function imgMultSelectSchema() {
             imgDesc: "默认图片描述",
           },
         ],
-        currentStatus: 0,
+        currentStatus: [0],
         isShow: true,
         name: "options-editor" as const,
         editCom: markRaw(optionsEditor),

@@ -27,7 +27,6 @@
 <script setup lang="ts">
 import type quesSchameType from "~/types/ques/quesSchameType";
 import headerMaterials from "../materials/headerMaterials.vue";
-import optionMaterials from "../materials/optionMaterials.vue";
 //通过props传递配置
 
 const props = defineProps<{
