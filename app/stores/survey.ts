@@ -1,23 +1,27 @@
 import { defineStore } from "pinia";
 import type { detailQuesType } from "~/types/ques/detailQuesType";
-import singleSelectSchema from "~/configs/quesSchame/singleSelectSchema";
-import multSelectSchema from "~/configs/quesSchame/multSelectSchema";
+import singleSelectSchema from "~/configs/quesSchame/selectSchema/singleSelectSchema";
+import multSelectSchema from "~/configs/quesSchame/selectSchema/multSelectSchema";
 import type quesSchameType from "~/types/ques/quesSchameType";
-import imgMultSelectSchema from "~/configs/quesSchame/imgMultSelectSchema";
-import imgSingleSelectSchema from "~/configs/quesSchame/dropdownSelectSchema";
+import imgMultSelectSchema from "~/configs/quesSchame/selectSchema/imgMultSelectSchema";
+import imgSingleSelectSchema from "~/configs/quesSchame/selectSchema/imgSingleSelectSchema";
 import type { oneOfStateType } from "~/types/ques/quesSchameType";
 import type { titleType } from "~/types/ques/common/index";
+import surveyTitleSchema from "~/configs/quesSchame/surveyTitleSchame";
+import type titleSchameType from "~/types/ques/titleSchemaType";
+import dropdownSelectSchema from "~/configs/quesSchame/selectSchema/dropdownSelectSchema";
 
 export const useSurveyStore = defineStore("survey", () => {
   const surveyList = ref<quesSchameType[]>([]);
   const surveyNum = ref<number[]>([]);
-
+  const surveyTitle = ref<titleSchameType>(surveyTitleSchema());
   //补全quesMap(待处理)
   const quesMap = {
     "single-select": singleSelectSchema,
     "mult-select": multSelectSchema,
     "img-mult-select": imgMultSelectSchema,
     "img-single-select": imgSingleSelectSchema,
+    "dropdown-select": dropdownSelectSchema,
   };
   //向问卷中添加题目，添加的是对应schame的默认内容
   const addQues = (
@@ -29,7 +33,8 @@ export const useSurveyStore = defineStore("survey", () => {
       detailQues === "single-select" ||
       detailQues === "mult-select" ||
       detailQues === "img-mult-select" ||
-      detailQues === "img-single-select"
+      detailQues === "img-single-select" ||
+      detailQues === "dropdown-select"
     ) {
       //列表中推入新序号
       surveyNum.value.push(getNewQuesNum());
@@ -66,7 +71,7 @@ export const useSurveyStore = defineStore("survey", () => {
           continue;
         }
         if (current && current !== -1) {
-          surveyNum.value[i] = current-1;
+          surveyNum.value[i] = current - 1;
         } else {
           continue;
         }
@@ -81,7 +86,6 @@ export const useSurveyStore = defineStore("survey", () => {
     changeType?: "title" | "desc"
   ) => {
     const name = quesStateSchame.name;
-    console.log(quesNum)
     const stateMap = {
       "title-editor": "title",
       "desc-editor": "desc",
@@ -100,5 +104,19 @@ export const useSurveyStore = defineStore("survey", () => {
     surveyList.value.splice(index, 1);
     updateQuesNum(index);
   };
-  return { addQues, getQues, getQuesNum, updateQues, deleteQues };
+  const updateTitle = (titleSchema: titleSchameType) => {
+    surveyTitle.value = titleSchema;
+  };
+  const getTitle = () => {
+    return surveyTitle.value;
+  };
+  return {
+    addQues,
+    getQues,
+    getQuesNum,
+    updateQues,
+    deleteQues,
+    updateTitle,
+    getTitle,
+  };
 });

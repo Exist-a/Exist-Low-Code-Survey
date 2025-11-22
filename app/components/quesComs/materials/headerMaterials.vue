@@ -9,7 +9,7 @@
       color: titleColor,
     }"
   >
-    <span class="num">{{ num + ". " }}</span>
+    <span class="num" v-if="props.num">{{ num + ". " }}</span>
     <span class="title-words">{{ title }}</span>
   </h2>
   <div
@@ -27,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   num: {
     type: Number,
-    required: true,
+    // required: true,
   },
   title: {
     type: String,

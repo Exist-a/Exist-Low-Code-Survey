@@ -9,7 +9,7 @@ import colorEditor from "~/components/editComs/colorEditor.vue";
 import { markRaw } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import DropdownSelect from "~/components/quesComs/select/dropdownSelect.vue";
-export default function imgSingleSelectSchema() {
+export default function dropdownSelectSchema() {
   //对应组件
   return {
     name: "dropdown-select" as const,
@@ -33,7 +33,6 @@ export default function imgSingleSelectSchema() {
       options: {
         id: uuidv4(),
         status: ["默认选项1", "默认选项2"],
-
         currentStatus: 0,
         isShow: true,
         name: "options-editor" as const,

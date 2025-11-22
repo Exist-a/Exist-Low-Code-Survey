@@ -6,26 +6,26 @@ import sizeEditor from "~/components/editComs/sizeEditor.vue";
 import weightEditor from "~/components/editComs/weightEditor.vue";
 import italicEditor from "~/components/editComs/italicEditor.vue";
 import colorEditor from "~/components/editComs/colorEditor.vue";
-import multSelect from "~/components/quesComs/select/multSelect.vue";
 import { markRaw } from "vue";
 import { v4 as uuidv4 } from "uuid";
-export default function multSelectSchema() {
+import surveyTitle from "~/components/quesComs/surveyTitle.vue";
+export default function surveyTitleSchema() {
   //对应组件
   return {
-    name: "mult-select" as const,
+    name: "survey-title" as const,
     id: uuidv4(),
-    type: markRaw(multSelect),
+    type: markRaw(surveyTitle),
     state: {
       title: {
         id: uuidv4(),
-        status: "多选题默认标题",
+        status: "默认问卷标题",
         isShow: true,
         name: "title-editor" as const,
         editCom: markRaw(titleEditor),
       },
       desc: {
         id: uuidv4(),
-        status: "多选题默认描述",
+        status: "默认问卷描述",
         isShow: true,
         name: "desc-editor" as const,
         editCom: markRaw(descEditor),
@@ -34,7 +34,7 @@ export default function multSelectSchema() {
         id: uuidv4(),
         status: ["默认选项1", "默认选项2"],
         currentStatus: 0,
-        isShow: true,
+        isShow: false,
         name: "options-editor" as const,
         editCom: markRaw(optionsEditor),
       },
@@ -49,7 +49,7 @@ export default function multSelectSchema() {
       titleSize: {
         id: uuidv4(),
         currentStatus: 0,
-        status: ["22", "20", "18"],
+        status: ["30", "28", "26"],
         isShow: true,
         name: "size-editor" as const,
         editCom: markRaw(sizeEditor),
@@ -62,14 +62,6 @@ export default function multSelectSchema() {
         name: "size-editor" as const,
         editCom: markRaw(sizeEditor),
       },
-      descWeight: {
-        id: uuidv4(),
-        currentStatus: 1,
-        status: ["加粗", "正常"],
-        isShow: true,
-        name: "weight-editor" as const,
-        editCom: markRaw(weightEditor),
-      },
       titleWeight: {
         id: uuidv4(),
         currentStatus: 1,
@@ -78,7 +70,15 @@ export default function multSelectSchema() {
         name: "weight-editor" as const,
         editCom: markRaw(weightEditor),
       },
-      descItalic: {
+      descWeight: {
+        id: uuidv4(),
+        currentStatus: 1,
+        status: ["加粗", "正常"],
+        isShow: true,
+        name: "weight-editor" as const,
+        editCom: markRaw(weightEditor),
+      },
+      titleItalic: {
         id: uuidv4(),
         currentStatus: 1,
         status: ["斜体", "正常"],
@@ -86,7 +86,7 @@ export default function multSelectSchema() {
         name: "italic-editor" as const,
         editCom: markRaw(italicEditor),
       },
-      titleItalic: {
+      descItalic: {
         id: uuidv4(),
         currentStatus: 1,
         status: ["斜体", "正常"],

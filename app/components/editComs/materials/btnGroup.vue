@@ -33,7 +33,6 @@ const props = defineProps<{
   height?: string;
 }>();
 const emits = defineEmits(["changeStatus"]);
-console.log(props.width);
 const btnGroup = ref<HTMLElement | null>(null);
 const changeStatus = (index: number, e: MouseEvent) => {
   changeActive(e);

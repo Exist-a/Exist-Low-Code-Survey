@@ -54,7 +54,7 @@ onMounted(() => {
     singleState.value = initial as number;
   } else {
     // 复选初始化：假设 initial 是选中的索引数组（number[]）
-    multiState.value = [initial] as number[];
+    multiState.value = initial as number[];
   }
 });
 </script>

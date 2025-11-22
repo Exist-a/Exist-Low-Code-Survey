@@ -1,3 +1,5 @@
+import type { imgOptionsStatus } from "../ques/common/optionsType"
+
 export type exinputType = ['password', 'text'][number]
 export interface exinput {
   modelValue:string|null

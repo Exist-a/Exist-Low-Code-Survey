@@ -1,7 +1,6 @@
 <template>
   <div class="_container">
     <headerMaterials
-      :num="props.num"
       :title="state.title.status"
       :titleSize="state.titleSize.status[state.titleSize.currentStatus]"
       :titleItalic="state.titleItalic.currentStatus"
@@ -14,24 +13,16 @@
       :descColor="state.descColor.status"
       :position="state.position.currentStatus"
     />
-    <optionMaterials
-      :optionsStatus="props.quesSchame.state.options"
-      :isSingleSelect="false"
-      :quesNum="props.num"
-      :position="state.position.currentStatus"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import type quesSchameType from "~/types/ques/quesSchameType";
-import HeaderMaterials from "../materials/headerMaterials.vue";
-const props = defineProps<{
-  num: number;
-  quesSchame:quesSchameType
-}>();
-const state = props.quesSchame.state;
+import type titleSchameType from '~/types/ques/titleSchemaType';
 
+const props = defineProps<{
+    titleSchema:titleSchameType
+}>()
+const state = props.titleSchema.state
 </script>
 
 <style scoped></style>

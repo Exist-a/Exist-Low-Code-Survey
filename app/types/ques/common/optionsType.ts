@@ -4,7 +4,7 @@ import type { VueComType } from '../quesSchameType'
 export default interface optionsType {
   id: string
   status: stringOptionsStatus[]|imgOptionsStatus[]
-  currentStatus: number
+  currentStatus: number|number[]
   isShow: boolean
   name: 'options-editor'
   editCom: VueComType

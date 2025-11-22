@@ -44,12 +44,19 @@
     </div>
     <div class="main">
       <div v-if="paletteName === 'out-line'" class="if-out-line">
+        <!-- 固定一个标题 -->
+        <outLineItem
+          :title="title.state.title.status"
+          :is-title="true"
+          :desc="title.state.desc.status"
+        />
         <outLineItem
           v-for="(item, index) in quesList"
           :title="item.state.title.status"
           :num="quesNum[index]"
           :desc="item.state.desc.status"
-        ></outLineItem>
+          :is-title="false"
+        />
         <!-- 渲染大纲 -->
       </div>
       <div v-else class="if-not-out-line">
@@ -70,6 +77,7 @@ import { paletteItems } from "~/configs/paletteSchame";
 import type { labelType } from "~/configs/paletteSchame";
 import type quesSchameType from "~/types/ques/quesSchameType";
 import outLineItem from "./outLineItem.vue";
+import type titleSchameType from "~/types/ques/titleSchemaType";
 const surveyStore = useSurveyStore();
 const emits = defineEmits(["addQues"]);
 const paletteItemsList = ref<string[]>(["大纲"]);
@@ -129,6 +137,7 @@ const changeQuesHandler = (e: Event) => {
 //获取store中的题目列表,用于大纲渲染
 const quesList = ref<quesSchameType[]>(surveyStore.getQues());
 const quesNum = ref<number[]>(surveyStore.getQuesNum());
+const title = ref<titleSchameType>(surveyStore.getTitle());
 </script>
 
 <style scoped lang="scss">

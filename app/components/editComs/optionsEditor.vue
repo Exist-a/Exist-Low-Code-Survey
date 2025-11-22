@@ -20,16 +20,34 @@
         </div>
       </div>
     </div>
-    <div class="img-options" v-else-if="isStringOption === false"></div>
+    <div class="img-options" v-else-if="isStringOption === false">
+      <div class="option" v-for="(item, index) in props.optionsSchame.status">
+        <editorImgInput
+          type="text"
+          v-model:modelValue="
+            props.optionsSchame.status[index] as imgOptionsStatus
+          "
+          class="img-input"
+          placeholder="请输入选项"
+        />
+        <div class="reduce-btn" @click="reduceOption(index)">
+          <Icon
+            name="teenyicons:minus-small-outline"
+            size="30px"
+            class="icon"
+          ></Icon>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type optionsType from "~/types/ques/common/optionsType";
-import type {imgOptionsStatus} from "~/types/ques/common/optionsType";
+import type { imgOptionsStatus } from "~/types/ques/common/optionsType";
 const props = defineProps<{
   optionsSchame: optionsType;
-  isStringOption: boolean|null;
+  isStringOption: boolean | null;
 }>();
 const emits = defineEmits(["updateDataToStore"]);
 watch(
@@ -37,6 +55,7 @@ watch(
     props.optionsSchame.status;
   },
   () => {
+    console.log(1221)
     emits("updateDataToStore", {
       quesStateSchame: props.optionsSchame,
     });
@@ -44,9 +63,9 @@ watch(
   { deep: true }
 );
 const reduceOption = (index: number) => {
-  if(props.optionsSchame.status.length === 1){
+  if (props.optionsSchame.status.length === 1) {
     //弹出组件无法减少
-    return
+    return;
   }
   props.optionsSchame.status.splice(index, 1);
 };
@@ -66,23 +85,31 @@ const imgOptionChecker = (item: unknown): item is imgOptionsStatus => {
   );
 };
 //定义选项schame
-const defaultImgOption:imgOptionsStatus = {
-  value:'默认图片单选',
-  imgDesc:'默认图片描述',
-  imgPath:''
-
-}
+const defaultImgOption: imgOptionsStatus = {
+  value: "默认图片单选",
+  imgDesc: "默认图片描述",
+  imgPath: "",
+};
 const addOption = () => {
   if (
     props.isStringOption &&
     isArrayOfType<string>(props.optionsSchame.status, stringChecker)
   ) {
     //是string
+    console.log("isString");
     props.optionsSchame.status.push("默认选项");
-  } else if(props.isStringOption&&isArrayOfType<imgOptionsStatus>(props.optionsSchame.status,imgOptionChecker)){
+  } else if (
+    !props.isStringOption &&
+    isArrayOfType<imgOptionsStatus>(
+      props.optionsSchame.status,
+      imgOptionChecker
+    )
+  ) {
     //是img
-    props.optionsSchame.status.push(defaultImgOption)
+    console.log("isImg");
+    props.optionsSchame.status.push(defaultImgOption);
   }
+  // console.log("isImg");
 };
 </script>
 
@@ -139,6 +166,23 @@ const addOption = () => {
         flex-shrink: 0;
         border-radius: $radius-lg;
         background-color: #1f2937e3;
+      }
+    }
+  }
+  .img-options {
+    .option {
+      display: flex;
+      .reduce-btn {
+        height: 75px;
+        width: 30px;
+        border-radius: $radius-lg;
+        color: #fff;
+        background-color: #1f2937e3;
+        margin-left: 5px;
+        .icon {
+          position: relative;
+          top: 22.5px;
+        }
       }
     }
   }

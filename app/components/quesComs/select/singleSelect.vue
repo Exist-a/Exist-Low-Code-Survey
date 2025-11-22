@@ -20,7 +20,7 @@
       :isSingleSelect="true"
       :quesNum="props.num"
       :position="state.position.currentStatus"
-    ></optionMaterials>
+    />
   </div>
 </template>
 

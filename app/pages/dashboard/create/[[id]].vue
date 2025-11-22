@@ -2,6 +2,11 @@
   <div class="container">
     <palette @addQues="addQues"></palette>
     <div class="survey" ref="survey">
+      <surveyTitle
+        :titleSchema="title"
+        @click="selectQues($event, title, -1, true)"
+        class="titleCom"
+      />
       <div class="ques" v-for="(ques, index) in quesList">
         <div class="reduce-btn" @click="delQues(index)">
           <Icon name="teenyicons:minus-small-outline" size="30px"></Icon>
@@ -11,7 +16,7 @@
           :is="getCom(ques)"
           :num="quesNumList[index]"
           :quesSchame="ques"
-          @click="selectQues($event, ques, index)"
+          @click="selectQues($event, ques, index, false)"
           class="quesCom"
         />
       </div>
@@ -33,6 +38,7 @@ import type { quesType } from "~/types/ques/quesType";
 import type quesSchameType from "~/types/ques/quesSchameType";
 import type { allQuesType } from "~/types/ques/detailQuesType";
 import { v4 as uuidv4 } from "uuid";
+import type titleSchameType from "~/types/ques/titleSchemaType";
 
 definePageMeta({
   layout: "default",
@@ -118,7 +124,7 @@ const quesComMap: Record<allQuesType, any> = {
 };
 const quesList = computed<quesSchameType[]>(() => surveyStore.getQues());
 const quesNumList = ref(surveyStore.getQuesNum());
-
+const title = ref(surveyStore.getTitle());
 //点击添加题目
 const addQues = (paletteName: quesType, quesName: number) => {
   //拿到目前要增加的题目
@@ -128,14 +134,18 @@ const addQues = (paletteName: quesType, quesName: number) => {
   //将更新active
   if (survey.value) {
     const childrenQues = survey.value.children;
-    for (let i = 0; i < childrenQues.length; i++) {
-      if (
-        childrenQues[i] &&
-        childrenQues[i]?.children[1]?.classList.contains("active")
-      ) {
-        childrenQues[i]?.children[1]?.classList.remove("active");
+    if (childrenQues[0] && childrenQues[0].classList.contains("active")) {
+      childrenQues[0].classList.remove("active");
+    } else {
+      for (let i = 0; i < childrenQues.length; i++) {
+        if (
+          childrenQues[i] &&
+          childrenQues[i]?.children[1]?.classList.contains("active")
+        ) {
+          childrenQues[i]?.children[1]?.classList.remove("active");
 
-        childrenQues[i]?.children[0]?.classList.remove("btn-active");
+          childrenQues[i]?.children[0]?.classList.remove("btn-active");
+        }
       }
     }
     activeQues.value = null;
@@ -147,13 +157,14 @@ const getCom = (ques: quesSchameType) => {
 };
 //点击选择题目
 const survey = ref<HTMLElement | null>(null);
-const activeQues = ref<quesSchameType | null>(null);
+const activeQues = ref<quesSchameType | titleSchameType | null>(null);
 const isStringOptions = ref<boolean | null>(null);
 const activeNum = ref<number | null>(null);
 const selectQues = (
   e: MouseEvent,
-  quesSchame: quesSchameType,
-  activeIndex: number
+  quesSchame: quesSchameType | titleSchameType,
+  activeIndex: number,
+  isTitle: boolean
 ) => {
   //清除上一个active
   if (
@@ -164,33 +175,55 @@ const selectQues = (
     survey.value
   ) {
     const childrenQues = survey.value.children;
-    for (let i = 0; i < childrenQues.length; i++) {
-      if (
-        childrenQues[i] &&
-        childrenQues[i]?.children[1]?.classList.contains("active")
-      ) {
-        childrenQues[i]?.children[1]?.classList.remove("active");
-        activeNum.value = null;
-        activeQues.value = null;
-        console.log("进入清除上一个active状态", activeNum.value);
+    console.log(childrenQues);
+    if (childrenQues[0] && childrenQues[0].classList.contains("active")) {
+      //只有题目并且题目是选中
+      activeNum.value = null;
+      activeQues.value = null;
+      childrenQues[0]?.classList.remove("active");
+    } else {
+      for (let i = 1; i < childrenQues.length; i++) {
+        if (
+          childrenQues[i] &&
+          childrenQues[i]?.children[1]?.classList.contains("active")
+        ) {
+          childrenQues[i]?.children[1]?.classList.remove("active");
+          activeNum.value = null;
+          activeQues.value = null;
 
-        childrenQues[i]?.children[0]?.classList.remove("btn-active");
+          childrenQues[i]?.children[0]?.classList.remove("btn-active");
+        }
       }
     }
   }
-  if (e.currentTarget && e.currentTarget instanceof HTMLElement) {
+  //如果点击的是标题
+  if (isTitle && e.currentTarget && e.currentTarget instanceof HTMLElement) {
+    if (e.currentTarget.classList.contains("active")) {
+      e.currentTarget.classList.remove("active");
+      activeQues.value = null;
+      activeNum.value = null;
+    } else {
+      e.currentTarget.classList.add("active");
+      activeQues.value = quesSchame;
+      activeNum.value = activeIndex;
+      console.log(activeQues.value)
+    }
+    isStringOptions.value = false;
+  } else if (
+    !isTitle &&
+    e.currentTarget &&
+    e.currentTarget instanceof HTMLElement
+  ) {
     const reduceBtn = e.currentTarget.previousElementSibling;
     if (
       e.currentTarget.classList.contains("active") &&
       reduceBtn?.classList.contains("btn-active")
     ) {
-
       reduceBtn.classList.remove("btn-active");
       e.currentTarget.classList.remove("active");
       activeQues.value = null;
       activeNum.value = null;
     } else {
-
       reduceBtn?.classList.add("btn-active");
       console.log(e.currentTarget.classList, 1);
       e.currentTarget.classList.add("active");
@@ -242,8 +275,22 @@ const delQues = (index: number) => {
   display: flex;
   height: 100%;
   .survey {
-    padding: 10px;
+    overflow-y: scroll;
+    padding: 20px 10px;
     flex: 1;
+    .titleCom {
+      position: relative;
+      padding: 20px 10px 10px 10px;
+      transition: all 0.5s ease;
+    }
+    .titleCom:hover {
+      transform: translateY(-5px);
+      box-shadow: $shadow-lg;
+    }
+    .active {
+      transform: translateY(-5px);
+      box-shadow: $shadow-lg;
+    }
     .ques {
       position: relative;
       .reduce-btn {

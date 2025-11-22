@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :class="{'container-title':props.isTitle}">
     <div>
       <div class="title">{{ props.num ? num + "." : "" }}{{ props.title }}</div>
       <div class="desc">{{ props.desc }}</div>
@@ -12,6 +12,7 @@ const props = defineProps<{
   num?: number;
   title: string;
   desc?: string;
+  isTitle:boolean;
 }>();
 </script>
 
@@ -42,6 +43,12 @@ const props = defineProps<{
       color: $font-color-light;
       font-style: italic;
     }
+  }
+}
+.container-title{
+  background-color: $font-color-normal;
+  .title{
+    color: $bg-color;
   }
 }
 </style>
