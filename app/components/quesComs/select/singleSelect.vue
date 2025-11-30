@@ -38,13 +38,4 @@ const state = props.quesSchame.state;
 </script>
 
 <style scoped lang="scss">
-// ._container {
-//   padding: 20px 10px 10px 10px;
-//   transition: all 0.5s ease;
-// }
-// ._container:hover{
-//   transform: translateY(-5px);
-//   box-shadow: $shadow-lg;
-
-// }
 </style>

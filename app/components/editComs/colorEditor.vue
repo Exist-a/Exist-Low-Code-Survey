@@ -20,7 +20,6 @@ watch(
   () => props.colorSchame.status,
   () => {
     //提交数据
-    console.log(props.colorSchame.status)
     emits('updateDataToStore',{quesStateSchame:props.colorSchame,changeType:"title"})
   }
 );

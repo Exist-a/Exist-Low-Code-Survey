@@ -135,7 +135,6 @@ const selectQues = (
     survey.value
   ) {
     const childrenQues = survey.value.children
-    console.log(childrenQues)
     if (childrenQues[0] && childrenQues[0].classList.contains('active')) {
       //只有题目并且题目是选中
       activeNum.value = null
@@ -163,7 +162,6 @@ const selectQues = (
       e.currentTarget.classList.add('active')
       activeQues.value = quesSchame
       activeNum.value = activeIndex
-      console.log(activeQues.value)
     }
     isStringOptions.value = false
   } else if (!isTitle && e.currentTarget && e.currentTarget instanceof HTMLElement) {
@@ -178,9 +176,7 @@ const selectQues = (
       activeNum.value = null
     } else {
       reduceBtn?.classList.add('btn-active')
-      console.log(e.currentTarget.classList, 1)
       e.currentTarget.classList.add('active')
-      console.log(e.currentTarget.classList, 2)
 
       activeQues.value = quesSchame
       activeNum.value = activeIndex
@@ -220,15 +216,12 @@ const delQues = (index: number) => {
   height: 100%;
   .survey {
     overflow-y: scroll;
-    /* Firefox 64+ 专用 */
     scrollbar-width: none;
-    /* IE 10+ / Edge 旧版 专用 */
     -ms-overflow-style: none;
     padding: 20px 10px;
     flex: 1;
-    /* Chrome/Safari/Opera（Webkit内核）专用 */
     .scroll-container::-webkit-scrollbar {
-      display: none; /* 或 width: 0; height: 0; 效果一致 */
+      display: none; 
     }
     .titleCom {
       position: relative;

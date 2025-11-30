@@ -30,6 +30,15 @@ importers:
         specifier: ^4.6.3
         version: 4.6.3(vue@3.5.22(typescript@5.9.3))
     devDependencies:
+      '@iconify-json/material-symbols':
+        specifier: ^1.2.48
+        version: 1.2.48
+      '@iconify-json/material-symbols-light':
+        specifier: ^1.2.48
+        version: 1.2.48
+      '@iconify-json/mynaui':
+        specifier: ^1.2.16
+        version: 1.2.16
       '@nuxt/schema':
         specifier: ^4.2.0
         version: 4.2.0
@@ -351,6 +360,15 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@iconify-json/material-symbols-light@1.2.48':
+    resolution: {integrity: sha512-0P41Do7AuBSZKvhxrJxug+OzZ3JPB6Qi44jn3sRKGPOB9XJM6dcH4mZnSsJsIzYk0KwOvZXq9VIQULVpfIXOzQ==}
+
+  '@iconify-json/material-symbols@1.2.48':
+    resolution: {integrity: sha512-qDjqYEeNCm31tae3YbsprEklWHIoVPvqlbTuqtisNjlhHRSiXy5x+AtUq9VwjlITRU+TtqsP6jW2h+pnEUURRQ==}
+
+  '@iconify-json/mynaui@1.2.16':
+    resolution: {integrity: sha512-SG50s+eHl+p19y+kntFTTt/erSiiBDgBIAMr9IxRSoOxwS9Sx06lFNDfa+RUAhEiKkjf4qBX3xK3lz8wiBhNBw==}
 
   '@iconify/collections@1.0.612':
     resolution: {integrity: sha512-YwafHLk3sCSNWt5pxPEnR1O3LRD//zRJXye3T6KK7kkybOKc8mu8tscOuqlIH7qmfPh273SZldVR4HuBs+pdcQ==}
@@ -3667,6 +3685,18 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.11':
     optional: true
+
+  '@iconify-json/material-symbols-light@1.2.48':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/material-symbols@1.2.48':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/mynaui@1.2.16':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/collections@1.0.612':
     dependencies:

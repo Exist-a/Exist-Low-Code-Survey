@@ -19,6 +19,9 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@iconify-json/material-symbols": "^1.2.48",
+    "@iconify-json/material-symbols-light": "^1.2.48",
+    "@iconify-json/mynaui": "^1.2.16",
     "@nuxt/schema": "^4.2.0",
     "@types/node": "^24.9.2",
     "prettier": "^3.6.2",

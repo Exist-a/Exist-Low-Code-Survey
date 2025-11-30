@@ -39,7 +39,6 @@ const selectedValue = computed({
     return props.isSingleSelect ? singleState.value : multiState.value;
   },
   set(val) {
-    console.log(val, multiState.value)
     if (props.isSingleSelect) {
       singleState.value = val as number;
     } else {

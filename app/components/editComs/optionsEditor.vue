@@ -55,7 +55,6 @@ watch(
     props.optionsSchame.status;
   },
   () => {
-    console.log(1221)
     emits("updateDataToStore", {
       quesStateSchame: props.optionsSchame,
     });
@@ -96,7 +95,6 @@ const addOption = () => {
     isArrayOfType<string>(props.optionsSchame.status, stringChecker)
   ) {
     //是string
-    console.log("isString");
     props.optionsSchame.status.push("默认选项");
   } else if (
     !props.isStringOption &&
@@ -106,10 +104,8 @@ const addOption = () => {
     )
   ) {
     //是img
-    console.log("isImg");
     props.optionsSchame.status.push(defaultImgOption);
   }
-  // console.log("isImg");
 };
 </script>
 

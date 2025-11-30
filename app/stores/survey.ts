@@ -10,6 +10,8 @@ import type { titleType } from "~/types/ques/common/index";
 import surveyTitleSchema from "~/configs/quesSchame/surveyTitleSchame";
 import type titleSchameType from "~/types/ques/titleSchemaType";
 import dropdownSelectSchema from "~/configs/quesSchame/selectSchema/dropdownSelectSchema";
+import textInputSchema from "~/configs/quesSchame/textInputSchema/textInputSchema";
+import scaleSchema from "~/configs/quesSchame/advancedQuestionSchema/scaleSchema";
 
 export const useSurveyStore = defineStore("survey", () => {
   const surveyList = ref<quesSchameType[]>([]);
@@ -22,6 +24,8 @@ export const useSurveyStore = defineStore("survey", () => {
     "img-mult-select": imgMultSelectSchema,
     "img-single-select": imgSingleSelectSchema,
     "dropdown-select": dropdownSelectSchema,
+    "text-input": textInputSchema,
+    scale: scaleSchema,
   };
   //向问卷中添加题目，添加的是对应schame的默认内容
   const addQues = (
@@ -34,7 +38,9 @@ export const useSurveyStore = defineStore("survey", () => {
       detailQues === "mult-select" ||
       detailQues === "img-mult-select" ||
       detailQues === "img-single-select" ||
-      detailQues === "dropdown-select"
+      detailQues === "dropdown-select" ||
+      detailQues === "text-input" ||
+      detailQues === "scale"
     ) {
       //列表中推入新序号
       surveyNum.value.push(getNewQuesNum());

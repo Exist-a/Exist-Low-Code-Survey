@@ -92,7 +92,6 @@ const changeQuesHandler = (e: Event) => {
   //获取题型
   const dom = e.target as HTMLElement;
   const classList = dom.classList;
-  console.log();
   if (classList.contains("iconify") && classList[2]) {
     //点击了icon
     const classname = classList[2] as labelType;
@@ -100,7 +99,6 @@ const changeQuesHandler = (e: Event) => {
     paletteName.value = classname;
     //获取父元素
     const parentNode = dom.parentNode as HTMLElement;
-    console.log(parentNode);
     if (parentNode) {
       parentNode.classList.add("active");
     }
@@ -111,7 +109,6 @@ const changeQuesHandler = (e: Event) => {
     paletteName.value = classname;
     //获取父元素
     const parentNode = dom.parentNode as HTMLElement;
-    console.log(parentNode);
     if (parentNode) {
       parentNode.classList.add("active");
     }

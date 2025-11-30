@@ -50,7 +50,6 @@ const selectedValue = computed({
     return props.isSingleSelect ? singleState.value : multiState.value
   },
   set(val) {
-    console.log(val, multiState.value,selectedValue)
     if (props.isSingleSelect) {
       singleState.value = val as number
     } else {
@@ -61,7 +60,6 @@ const selectedValue = computed({
 
 onMounted(() => {
   const initial = props.optionsStatus.currentStatus
-  console.log(initial)
   if (props.isSingleSelect) {
     // 单选初始化：假设 initial 是单一下标（number）
     singleState.value = initial as number

@@ -30,8 +30,6 @@ const input = ref<HTMLInputElement | null>(null);
 const handleInput = (flag: "value" | "imgDesc", e: InputEvent) => {
   if (e.target) {
     const inputTarget = e.target as HTMLInputElement;
-    console.log(inputTarget.value);
-    //这里有问题，提交的是imgOptionType
     if (flag === "value") {
       if (props.modelValue) {
         const option: imgOptionsStatus = {
@@ -86,8 +84,6 @@ const updateImg = async () => {
         console.error("reader error");
       };
       base64File = await fileToBase64(file);
-      console.log(base64File)
-      console.log('reader ok')
       const option: imgOptionsStatus = {
           value: props.modelValue.value,
           imgDesc: props.modelValue.imgDesc,
