@@ -6,12 +6,14 @@ import type quesSchameType from "~/types/ques/quesSchameType";
 import imgMultSelectSchema from "~/configs/quesSchame/selectSchema/imgMultSelectSchema";
 import imgSingleSelectSchema from "~/configs/quesSchame/selectSchema/imgSingleSelectSchema";
 import type { oneOfStateType } from "~/types/ques/quesSchameType";
-import type { titleType } from "~/types/ques/common/index";
 import surveyTitleSchema from "~/configs/quesSchame/surveyTitleSchame";
 import type titleSchameType from "~/types/ques/titleSchemaType";
 import dropdownSelectSchema from "~/configs/quesSchame/selectSchema/dropdownSelectSchema";
 import textInputSchema from "~/configs/quesSchame/textInputSchema/textInputSchema";
 import scaleSchema from "~/configs/quesSchame/advancedQuestionSchema/scaleSchema";
+import satisfactionSchema from "~/configs/quesSchame/advancedQuestionSchema/satisfactionSchema";
+import dateTimeSchema from "~/configs/quesSchame/advancedQuestionSchema/dateTimeSchema";
+import sortSchema from "~/configs/quesSchame/advancedQuestionSchema/sortSchema";
 
 export const useSurveyStore = defineStore("survey", () => {
   const surveyList = ref<quesSchameType[]>([]);
@@ -26,6 +28,9 @@ export const useSurveyStore = defineStore("survey", () => {
     "dropdown-select": dropdownSelectSchema,
     "text-input": textInputSchema,
     scale: scaleSchema,
+    satisfaction: satisfactionSchema,
+    "date-time": dateTimeSchema,
+    sort: sortSchema,
   };
   //向问卷中添加题目，添加的是对应schame的默认内容
   const addQues = (
@@ -40,11 +45,15 @@ export const useSurveyStore = defineStore("survey", () => {
       detailQues === "img-single-select" ||
       detailQues === "dropdown-select" ||
       detailQues === "text-input" ||
-      detailQues === "scale"
+      detailQues === "scale" ||
+      detailQues === "satisfaction" ||
+      detailQues === "date-time" ||
+      detailQues === "sort"
     ) {
       //列表中推入新序号
       surveyNum.value.push(getNewQuesNum());
       surveyList.value.push(quesMap[detailQues]());
+      console.log(quesMap[detailQues]());
     }
   };
   const getQues = () => {
