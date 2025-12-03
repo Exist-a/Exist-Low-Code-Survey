@@ -148,6 +148,10 @@ export const useSurveyStore = defineStore("survey", () => {
   const getTitle = () => {
     return surveyTitle.value;
   };
+  const getSurveyList = ()=>{
+    console.log(surveyTitle.value)
+    return [surveyTitle.value,...surveyList.value];
+  }
   return {
     addQues,
     getQues,
@@ -156,5 +160,6 @@ export const useSurveyStore = defineStore("survey", () => {
     deleteQues,
     updateTitle,
     getTitle,
+    getSurveyList,
   };
 });
