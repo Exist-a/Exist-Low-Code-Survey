@@ -6,12 +6,13 @@
     class="options-container"
   >
     <draggableComponent
-    :item-key="optionsStatus.id"
-    v-model="optionsStatus.status"
+      :item-key="optionsStatus.id"
+      v-model="optionsStatus.status"
+      class="draggable-container"
     >
-       <div v-for="item,index in optionsStatus.status">
-        {{ item }}
-       </div>
+      <template #item="{ element }">
+        <div class="option-item">{{ element }}</div>
+      </template>
     </draggableComponent>
   </div>
 </template>
@@ -24,11 +25,7 @@ const props = defineProps<{
   position: number;
 }>();
 
-const singleState = ref<number>(-1);
-
-
-
-
+const state = ref<string[]>(props.optionsStatus.status as string[]);
 </script>
 
 <style scoped lang="scss">
@@ -37,24 +34,22 @@ const singleState = ref<number>(-1);
   margin-top: 20px;
   // display: flex;
   // justify-content: space-evenly;
-
-  .option-item {
-    transition: all 0.2s;
+  .draggable-container {
     display: inline-block;
-    margin: 2px;
-    background-color: $bg-color;
-    width: 30px;
-    height: 40px;
-    border-radius: $radius-base;
-    font-size: 14px;
-    color: $font-color-normal;
-    line-height: 40px;
-    text-align: center;
-    cursor: pointer;
-  }
-  .active {
-    background-color: $font-color-normal;
-    color: $bg-color;
+    .option-item {
+      width: 220px;
+      height: 40px;
+      background-color: #a65252;
+      margin-bottom: 10px;
+      cursor: pointer;
+      line-height: 30px;
+      padding: 5px 10px;
+      font-size: 14px;
+      overflow-y: scroll;
+      border-radius: $radius-base;
+      color: rgba(255, 255, 255, 0.891);
+      background-color: $font-color-normal;
+    }
   }
 }
 </style>

@@ -14,7 +14,22 @@ import scaleSchema from "~/configs/quesSchame/advancedQuestionSchema/scaleSchema
 import satisfactionSchema from "~/configs/quesSchame/advancedQuestionSchema/satisfactionSchema";
 import dateTimeSchema from "~/configs/quesSchame/advancedQuestionSchema/dateTimeSchema";
 import sortSchema from "~/configs/quesSchame/advancedQuestionSchema/sortSchema";
-
+import remarkSchema from "~/configs/quesSchame/remark/remarkSchema";
+import wechatSchema from "~/configs/quesSchame/contactInfo/wechatSchema";
+import universitySchema from "~/configs/quesSchame/personalInfo/university";
+import phoneSchema from "~/configs/quesSchame/contactInfo/phoneSchema";
+import qqSchema from "~/configs/quesSchame/contactInfo/qqSchema";
+import emailSchema from "~/configs/quesSchame/contactInfo/emailSchema";
+import dateOfBirthSchema from "~/configs/quesSchame/personalInfo/dateOfBirthSchema";
+import genderSchema from "~/configs/quesSchame/personalInfo/genderSchema";
+import idCardSchema from "~/configs/quesSchame/personalInfo/idCardSchema";
+import industrySchema from "~/configs/quesSchame/personalInfo/industrySchema";
+import majorSchema from "~/configs/quesSchame/personalInfo/majorSchema";
+import nameSchema from "~/configs/quesSchame/personalInfo/nameSchema";
+import occupationSchema from "~/configs/quesSchame/personalInfo/occupationSchema";
+import ageSchema from "~/configs/quesSchame/personalInfo/ageSchema";
+import { ref } from "vue";
+import educationSchema from "~/configs/quesSchame/personalInfo/educationSchema";
 export const useSurveyStore = defineStore("survey", () => {
   const surveyList = ref<quesSchameType[]>([]);
   const surveyNum = ref<number[]>([]);
@@ -31,6 +46,21 @@ export const useSurveyStore = defineStore("survey", () => {
     satisfaction: satisfactionSchema,
     "date-time": dateTimeSchema,
     sort: sortSchema,
+    remark: remarkSchema,
+    "wechat":wechatSchema,
+    "university":universitySchema,
+    "qq":qqSchema,
+    "phone":phoneSchema,
+    "email":emailSchema,
+    "date-of-birth":dateOfBirthSchema,
+    "gender":genderSchema,
+    "id-card":idCardSchema,
+    "industry":industrySchema,
+    "major":majorSchema,
+    "name":nameSchema,
+    "occupation":occupationSchema,
+    "age":ageSchema,
+    "education":educationSchema,
   };
   //向问卷中添加题目，添加的是对应schame的默认内容
   const addQues = (
@@ -38,18 +68,11 @@ export const useSurveyStore = defineStore("survey", () => {
     detailQues: detailQuesType[typeof ques]
   ) => {
     // 拿到题目后，向数组中添加题目的schame
-    if (
-      detailQues === "single-select" ||
-      detailQues === "mult-select" ||
-      detailQues === "img-mult-select" ||
-      detailQues === "img-single-select" ||
-      detailQues === "dropdown-select" ||
-      detailQues === "text-input" ||
-      detailQues === "scale" ||
-      detailQues === "satisfaction" ||
-      detailQues === "date-time" ||
-      detailQues === "sort"
-    ) {
+    if (detailQues === "remark") {
+      //说明是remark类型的题目
+      surveyNum.value.push(-1); //remark类型题目不显示题号，使用-1占位
+      surveyList.value.push(quesMap[detailQues]());
+    } else {
       //列表中推入新序号
       surveyNum.value.push(getNewQuesNum());
       surveyList.value.push(quesMap[detailQues]());

@@ -7,6 +7,7 @@
       fontStyle: titleItalic ? 'normal' : 'italic',
       textAlign: position ? 'center' : 'left',
       color: titleColor,
+      display: isShowTitle ? 'block' : 'none',
     }"
   >
     <span class="num" v-if="props.num">{{ num + ". " }}</span>
@@ -20,6 +21,7 @@
       color: descColor,
       fontStyle: descItalic ? 'normal' : 'italic',
       textAlign: position ? 'center' : 'left',
+      display: isShowDesc ? 'block' : 'none',
     }"
   >
     {{ desc }}
@@ -31,6 +33,10 @@ const props = defineProps({
   num: {
     type: Number,
     // required: true,
+  },
+  isShowTitle: {
+    type: Boolean,
+    default: true,
   },
   title: {
     type: String,
@@ -51,6 +57,10 @@ const props = defineProps({
   titleWeight: {
     type: Number,
     default: 1,
+  },
+  isShowDesc: {
+    type: Boolean,
+    default: true,
   },
   desc: {
     type: String,

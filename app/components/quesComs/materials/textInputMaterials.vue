@@ -5,7 +5,13 @@
       textAlign: position ? 'center' : 'left',
     }"
   >
-    <input type="text" class="input" v-model="inputValue"/>
+    <input
+      :type="inputType ? inputType : 'text'"
+      :min = "(inputType==='number' && min) ? min : undefined"
+      :max = "(inputType==='number' && max) ? max : undefined"
+      class="input"
+      v-model="inputValue"
+    />
   </div>
 </template>
 
@@ -13,8 +19,11 @@
 defineProps<{
   quesNum: number;
   position: number;
+  inputType?: string;
+  min?:string;
+  max?:string;
 }>();
-const inputValue = ref('')
+const inputValue = ref("");
 </script>
 
 <style scoped lang="scss">

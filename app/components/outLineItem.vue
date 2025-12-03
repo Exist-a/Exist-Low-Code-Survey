@@ -1,7 +1,9 @@
 <template>
-  <div class="container" :class="{'container-title':props.isTitle}">
+  <div class="container" :class="{ 'container-title': props.isTitle }">
     <div>
-      <div class="title">{{ props.num ? num + "." : "" }}{{ props.title }}</div>
+      <div class="title">
+        {{ props.num && props.num !== -1 ? num + "." : "" }}{{ props.title }}
+      </div>
       <div class="desc">{{ props.desc }}</div>
     </div>
   </div>
@@ -12,7 +14,7 @@ const props = defineProps<{
   num?: number;
   title: string;
   desc?: string;
-  isTitle:boolean;
+  isTitle: boolean;
 }>();
 </script>
 
@@ -24,7 +26,7 @@ const props = defineProps<{
   width: 100%;
   cursor: pointer;
   background-color: white;
-//   padding: 10px;
+  //   padding: 10px;
   border-radius: $radius-lg;
   margin-bottom: 10px;
   transition: all 0.5s;
@@ -42,12 +44,15 @@ const props = defineProps<{
       font-size: 12px;
       color: $font-color-light;
       font-style: italic;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }
-.container-title{
+.container-title {
   background-color: $font-color-normal;
-  .title{
+  .title {
     color: $bg-color;
   }
 }

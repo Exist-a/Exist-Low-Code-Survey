@@ -83,6 +83,10 @@ const emits = defineEmits(["addQues"]);
 const paletteItemsList = ref<string[]>(["大纲"]);
 const paletteName = ref<labelType>("out-line");
 const changeQuesHandler = (e: Event) => {
+  const dom = e.target as HTMLElement;
+  if(dom.classList.contains("label")){
+    return;
+  }
   //获取目前active
   const beforeActiveEl = document.querySelector(".item.active");
   if (beforeActiveEl) {
@@ -90,7 +94,6 @@ const changeQuesHandler = (e: Event) => {
   }
 
   //获取题型
-  const dom = e.target as HTMLElement;
   const classList = dom.classList;
   if (classList.contains("iconify") && classList[2]) {
     //点击了icon
