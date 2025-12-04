@@ -34,7 +34,6 @@ export const useSurveyStore = defineStore("survey", () => {
   const surveyList = ref<quesSchameType[]>([]);
   const surveyNum = ref<number[]>([]);
   const surveyTitle = ref<titleSchameType>(surveyTitleSchema());
-  //补全quesMap(待处理)
   const quesMap = {
     "single-select": singleSelectSchema,
     "mult-select": multSelectSchema,
