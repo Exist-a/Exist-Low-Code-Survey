@@ -63,11 +63,6 @@ interface exinput {
 const addImg = () => {
   if (input.value) {
     input.value.click();
-    //继续完善
-    // const file = input.value.value
-    // if(isImg(file)){
-
-    // }
   }
 };
 const updateImg = async () => {

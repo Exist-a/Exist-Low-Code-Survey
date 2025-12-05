@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   
   css: ['~/assets/scss/global.scss'],
-  modules:['@nuxt/icon','@pinia/nuxt'],
+  modules:['@nuxt/icon', '@pinia/nuxt', 'nuxt-echarts'],
   components: [
     {
       path: '~/components',

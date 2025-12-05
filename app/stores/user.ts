@@ -5,6 +5,9 @@ export const useUserStore = defineStore("user", () => {
     "https://tse1-mm.cn.bing.net/th/id/OIP-C.W-aIISi2O6ZdKANiYw7JwgAAAA?w=187&h=187&c=7&r=0&o=7&cb=ucfimg2&dpr=2&pid=1.7&rm=3&ucfimg=1"
   );
   const userId = ref<number>(10000001);
+  //还要补充问卷数据
+
+  
   const getUserInfo = () => {
     return {
       username: username.value,
@@ -12,7 +15,11 @@ export const useUserStore = defineStore("user", () => {
       userId: userId.value,
     };
   };
+  const setUserName = (newUsername:string)=>{
+    username.value = newUsername
+  }
   return {
     getUserInfo,
+    setUserName
   };
 });
