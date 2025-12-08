@@ -54,7 +54,7 @@ const switchFlat = () => {
   position: relative;
   display: flex;
   align-items: center;
-
+  margin: 10px 0;
   .icon {
     position: absolute;
     left: 0.3vw;

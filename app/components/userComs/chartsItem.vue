@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import * as echarts from 'echarts';
 import type { 
   EChartsOption, 
@@ -113,41 +114,83 @@ const toggleExpand = (index: number) => {
   expandedIndex.value = expandedIndex.value === index ? null : index;
 };
 
-// 配置1：提交状态饼图（保留原有逻辑，无修改）
+// 配置1：提交状态饼图（彻底修复hover文字重叠）
 const getSubmitStatusOption = (stats: SurveySubmitStats): EChartsOption => {
+  // 计算总数和百分比
+  const total = stats.submitted + stats.unSubmitted;
+  const submittedPercent = ((stats.submitted / total) * 100).toFixed(1);
+  const unSubmittedPercent = ((stats.unSubmitted / total) * 100).toFixed(1);
+
   const tooltip: TooltipComponentOption = {
     trigger: 'item',
-    textStyle: { color: '#333' },
+    textStyle: { color: '#333', fontSize: 12 },
+    formatter: '{b}: {c} 人 ({d}%)',
+    // 关闭提示框浮层与文字重叠
+    position: ['50%', '50%'],
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderColor: '#eee',
+    borderWidth: 1,
+    padding: 10,
   };
 
   const legend: LegendComponentOption = {
     orient: 'horizontal',
-    bottom: 0,
-    textStyle: { color: '#333' },
+    bottom: 10,
+    left: 'center',
+    textStyle: { color: '#333', fontSize: 12 },
+    itemGap: 20,
   };
 
   const series: PieSeriesOption[] = [
     {
       name: '提交状态',
       type: 'pie',
-      radius: ['40%', '70%'],
-      avoidLabelOverlap: false,
+      radius: ['40%', '70%'], // 扩大内半径，给中心文字留足空间
+      center: ['50%', '50%'], // 饼图居中
+      avoidLabelOverlap: true,
+      // 非hover状态：仅显示中心总计文字，关闭外部标签和标签线
       label: {
         show: true,
-        position: 'center',
+        position: 'center', // 固定中心显示
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#333',
+        lineHeight: 20, // 关键：设置行高，避免换行重叠
+        formatter: `总计\n${total} 人`, // 非hover只显示总计
       },
       labelLine: {
-        show: false,
+        show: false, // 彻底关闭外部标签线
+      },
+      // hover状态：隐藏总计，只显示当前区块的详细信息
+      emphasis: {
+        label: {
+          show: true,
+          position: 'center',
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: '#333',
+          lineHeight: 20, // 换行行高
+          formatter: (params) => {
+            const { name, value } = params;
+            const percent = name === '已提交' ? submittedPercent : unSubmittedPercent;
+            return `${name}\n${value} 人\n(${percent}%)`;
+          },
+        },
+        // hover时隐藏其他区块的文字干扰
+        focus: 'self',
       },
       data: [
         { value: stats.submitted, name: '已提交' },
         { value: stats.unSubmitted, name: '未提交' },
       ],
       itemStyle: {
-       color: (params): Color => {
-          const colors: Color[] = ['#333', '#999'];
+        color: (params): Color => {
+          const colors: Color[] = ['#409EFF', '#E6A23C'];
           return colors[params.dataIndex] || '#666';
         },
+        borderRadius: 8,
+        shadowBlur: 5, // 降低阴影强度，避免遮挡文字
+        shadowColor: 'rgba(0,0,0,0.05)',
       },
     },
   ];
@@ -157,10 +200,17 @@ const getSubmitStatusOption = (stats: SurveySubmitStats): EChartsOption => {
     legend,
     series,
     backgroundColor: 'transparent',
+    // 增加内边距，避免文字溢出容器
+    grid: {
+      top: 20,
+      bottom: 40,
+      left: 20,
+      right: 20,
+    },
   } as EChartsOption;
 };
 
-// 配置2：选择题/满意度题柱状图（核心修正：移除axisLabel.textStyle，直接配置color）
+// 配置2：选择题/满意度题柱状图（保持不变）
 const getQuestionOption = (question: SurveyQuestion): EChartsOption => {
   const xData = question.options.map(item => item.name);
   const yData = question.options.map(item => item.value);
@@ -171,24 +221,41 @@ const getQuestionOption = (question: SurveyQuestion): EChartsOption => {
     textStyle: { color: '#333' },
   };
 
-  // 修正：移除axisLabel.textStyle，直接配置color（解决弃用警告）
   const xAxis = [
     {
       type: 'category',
       data: xData,
-      axisLine: { lineStyle: { color: '#333' } },
-      axisLabel: { color: '#333' }, // 直接配置颜色，替代textStyle.color
+      axisLine: { lineStyle: { color: '#E5E7EB' } },
+      axisLabel: { 
+        color: '#333',
+        fontSize: 12
+      },
+      axisTick: { alignWithLabel: true }
     },
   ];
 
   const yAxis = [
     {
       type: 'value',
-      axisLine: { lineStyle: { color: '#333' } },
-      axisLabel: { color: '#333' }, // 直接配置颜色，替代textStyle.color
-      splitLine: { lineStyle: { color: '#eee' } },
+      axisLine: { lineStyle: { color: '#E5E7EB' } },
+      axisLabel: { 
+        color: '#333', 
+        fontSize: 12,
+        formatter: '{value} 人'
+      },
+      splitLine: { lineStyle: { color: '#F3F4F6' } },
     },
   ];
+
+  let gradientColors: [string, string];
+  let highlightGradientColors: [string, string];
+  if (question.type === 'satisfaction') {
+    gradientColors = ['#C06C84', '#6C5CE7'];
+    highlightGradientColors = ['rgba(192, 108, 132, 0.9)', 'rgba(108, 92, 231, 0.9)'];
+  } else {
+    gradientColors = ['#3498DB', '#2ECC71'];
+    highlightGradientColors = ['rgba(52, 152, 219, 0.9)', 'rgba(46, 204, 113, 0.9)'];
+  }
 
   const series: BarSeriesOption[] = [
     {
@@ -198,10 +265,19 @@ const getQuestionOption = (question: SurveyQuestion): EChartsOption => {
       data: yData,
       itemStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: '#333' },
-          { offset: 1, color: '#666' },
+          { offset: 0, color: gradientColors[0] },
+          { offset: 1, color: gradientColors[1] },
         ]),
+        borderRadius: [4, 4, 0, 0],
       },
+      emphasis: {
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: highlightGradientColors[0] },
+            { offset: 1, color: highlightGradientColors[1] },
+          ]),
+        }
+      }
     },
   ];
 
@@ -211,6 +287,7 @@ const getQuestionOption = (question: SurveyQuestion): EChartsOption => {
       left: '3%',
       right: '4%',
       bottom: '3%',
+      top: '10%',
       containLabel: true,
     },
     xAxis,
@@ -232,12 +309,13 @@ $radius-base: 4px;
 .charts-container {
   padding: 20px;
   min-height: 100vh;
+  background-color: $bg-color;
 
   .survey-item {
     background: #fff;
-    border: 1px solid $font-color-light;
+    border: 1px solid #E5E7EB;
     border-radius: $radius-lg;
-    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     margin-bottom: 20px;
     overflow: hidden;
 
@@ -247,7 +325,7 @@ $radius-base: 4px;
       align-items: center;
       padding: 15px 20px;
       cursor: pointer;
-      border-bottom: 1px solid $font-color-light;
+      border-bottom: 1px solid #F3F4F6;
 
       .survey-title {
         font-size: 18px;
@@ -258,12 +336,14 @@ $radius-base: 4px;
 
       .expand-icon {
         font-size: 16px;
-        color: $font-color-normal;
-        // 移除动画相关的transition
+        color: #409EFF;
+        transition: transform 0.2s ease;
+        &:hover {
+          transform: scale(1.1);
+        }
       }
     }
 
-    // 保留一行两个布局，移除所有动画样式
     .survey-charts {
       padding: 20px;
       display: flex;
@@ -276,17 +356,40 @@ $radius-base: 4px;
         flex: 0 0 calc(50% - 10px);
         box-sizing: border-box;
         background: #fff;
-        border: 1px solid $font-color-light;
+        border: 1px solid #E5E7EB;
         border-radius: $radius-lg;
         padding: 15px;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
 
         .chart-subtitle {
           font-size: 16px;
           color: $font-color-normal;
           margin: 0 0 10px 0;
           padding-bottom: 8px;
-          border-bottom: 1px solid $font-color-light;
+          border-bottom: 1px solid #F3F4F6;
+          flex-shrink: 0;
+        }
+
+        // 强制饼图容器高度，确保文字有足够显示空间
+        :deep(.echarts-container) {
+          flex: 1;
+          height: 280px !important; // 调高容器高度，避免文字挤压
+        }
+      }
+    }
+  }
+}
+
+// 响应式适配
+@media (max-width: 768px) {
+  .charts-container {
+    .survey-item {
+      .survey-charts {
+        .chart-card {
+          flex: 0 0 100%;
         }
       }
     }

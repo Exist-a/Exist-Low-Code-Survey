@@ -1,41 +1,72 @@
 <template>
-  <!-- 遮罩层 -->
-  <div class="dialog-mask" @click="handleCancel"></div>
-  <!-- 弹窗容器 -->
+  <div class="dialog-mask" @click="showCancel ? handleCancel : () => {}"></div>
   <div class="dialog-box">
-    <!-- 标题 -->
     <h3 class="dialog-title">{{ title }}</h3>
-    <!-- 内容 -->
     <div class="dialog-content">{{ content }}</div>
-    <!-- 双按钮区域 -->
-    <div class="dialog-btns">
-      <button @click="handleCancel" class="btn cancel-btn">{{ cancelText }}</button>
-      <button @click="handleConfirm" class="btn confirm-btn">{{ confirmText }}</button>
+    
+    <div v-if="showInput" class="dialog-input-wrap">
+      <input
+        v-model="inputVal"
+        :placeholder="inputPlaceholder"
+        :maxlength="inputMaxlength"
+        class="dialog-input"
+        type="text"
+        :disabled="loading" 
+      >
+    </div>
+
+    <div class="dialog-btns" :class="{ 'single-btn': !showCancel }">
+      <button v-if="showCancel" @click="handleCancel" class="btn cancel-btn" :disabled="loading">
+        {{ cancelText }}
+      </button>
+      <button @click="handleConfirm" class="btn confirm-btn" :disabled="loading">
+        <!-- 加载中显示loading文本/图标 -->
+        <span v-if="loading">处理中...</span>
+        <span v-else>{{ confirmText }}</span>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// 仅保留核心 props
+
 const props = defineProps<{
-  title: string; // 弹窗标题（必传）
-  content: string; // 弹窗内容（必传）
-  confirmText?: string; // 确认按钮文本（默认"确认"）
-  cancelText?: string; // 取消按钮文本（默认"取消"）
+  title: string;
+  content: string;
+  confirmText?: string;
+  cancelText?: string;
+  showInput?: boolean;
+  inputValue?: string;
+  inputPlaceholder?: string;
+  inputMaxlength?: number;
+  showCancel?: boolean;
+  loading?: boolean; // 新增：加载状态
 }>();
 
-// 仅暴露确认/取消事件
+const inputVal = ref(props.inputValue || '');
+const loading = ref(props.loading || false); // 响应式加载状态
+
+// 监听外部传入的loading状态
+watch(() => props.loading, (val) => {
+  loading.value = val || false;
+}, { immediate: true });
+
 const emit = defineEmits<{
-  confirm: [];
+  confirm: [value: string];
   cancel: [];
 }>();
 
-// 按钮点击逻辑
-const handleConfirm = () => emit("confirm");
+const handleConfirm = () => emit("confirm", inputVal.value);
 const handleCancel = () => emit("cancel");
+
+// 暴露loading给父级（调用层）修改
+defineExpose({
+  loading,
+});
 </script>
 
 <style scoped lang="scss">
+/* 原有样式不变，新增加载状态样式 */
 .dialog-mask {
   position: fixed;
   top: 0;
@@ -67,17 +98,48 @@ const handleCancel = () => emit("cancel");
 }
 
 .dialog-content {
-  margin: 0 0 30px 0;
+  margin: 0 0 20px 0;
   font-size: 16px;
   color: #666;
   line-height: 1.5;
   text-align: center;
 }
 
+.dialog-input-wrap {
+  margin: 0 0 30px 0;
+}
+.dialog-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  &:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  }
+  &:disabled {
+    background: #f9f9f9;
+    color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
 .dialog-btns {
   display: flex;
   justify-content: space-between;
   gap: 12px;
+}
+
+.dialog-btns.single-btn {
+  justify-content: center;
+}
+.dialog-btns.single-btn .confirm-btn {
+  flex: none;
+  width: 100%;
 }
 
 .btn {
@@ -90,15 +152,21 @@ const handleCancel = () => emit("cancel");
   transition: background 0.2s;
 }
 
+/* 新增：禁用/加载状态样式 */
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .cancel-btn {
   background: #f5f5f5;
   color: #666;
-  &:hover { background: #eee; }
+  &:hover:not(:disabled) { background: #eee; }
 }
 
 .confirm-btn {
   background: #2563eb;
   color: #fff;
-  &:hover { background: #1d4ed8; }
+  &:hover:not(:disabled) { background: #1d4ed8; }
 }
 </style>

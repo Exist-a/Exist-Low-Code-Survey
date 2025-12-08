@@ -44,6 +44,7 @@ definePageMeta({
   layout: "default",
 });
 const surveyStore = useSurveyStore();
+const route = useRoute();
 //题目组件映射表
 const quesComMap: Record<allQuesType, any> = {
   "single-select": defineAsyncComponent(
@@ -264,6 +265,16 @@ const delQues = (index: number) => {
     }
   }
 };
+onMounted(()=>{
+  //判断是否携带id
+  const id = route.params.id
+  if(id===''){
+    //是新建问卷
+  }else{
+    //调用接口获取问卷数据
+    
+  }
+})
 </script>
 
 <style scoped lang="scss">
